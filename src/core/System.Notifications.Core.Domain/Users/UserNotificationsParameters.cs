@@ -1,13 +1,12 @@
 ﻿using System.Notifications.Core.Domain.Abstracts.Domain;
-using System.Notifications.Core.Domain.Notifications;
 
 namespace System.Notifications.Core.Domain.Users;
 
-public record UserNotifications : Entity
+public record UserNotificationsParameters : Entity
 {
-    private readonly List<NotificationSettings> _notificationSettings;
+    private readonly List<UserNotificationSettings> _notificationSettings;
 
-    public UserNotifications(string emailAddress, string contact)
+    public UserNotificationsParameters(string emailAddress, string contact)
     {
         EmailAddress = emailAddress;
         Contact = contact;
@@ -15,7 +14,7 @@ public record UserNotifications : Entity
         IsEnabled = true;
         CreatedAt = DateTime.Now;
 
-        _notificationSettings = new List<NotificationSettings>();
+        _notificationSettings = new List<UserNotificationSettings>();
     }
 
     public string EmailAddress { get; private set; } = null!;
@@ -27,9 +26,9 @@ public record UserNotifications : Entity
 
     public bool IsEnabled { get; private set; }
 
-    public IReadOnlyCollection<NotificationSettings> NotificationSettings => _notificationSettings;
+    public IReadOnlyCollection<UserNotificationSettings> NotificationSettings => _notificationSettings;
 
-    public void AddSenttings(NotificationSettings notificationSettings)
+    public void AddSenttings(UserNotificationSettings notificationSettings)
     {        
         _notificationSettings.Add(notificationSettings);
         UpdatedAt = DateTime.Now;

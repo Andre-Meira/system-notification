@@ -1,10 +1,10 @@
-﻿namespace System.Notifications.Core.Domain.Notifications;
+﻿namespace System.Notifications.Core.Domain.Users;
 
-public class NotificationSettings
+public class UserNotificationSettings
 {
-    public NotificationSettings(string eventCode, 
+    public UserNotificationSettings(string eventCode,
         string OutboundCode,
-        Guid eventId, 
+        Guid eventId,
         Guid outboundNotification)
     {
         EventCode = eventCode;
