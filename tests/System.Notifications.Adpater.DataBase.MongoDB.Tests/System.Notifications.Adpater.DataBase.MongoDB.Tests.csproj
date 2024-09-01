@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,15 +11,17 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Testcontainers" Version="3.9.0" />
+    <PackageReference Include="Testcontainers.MongoDb" Version="3.9.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
+	 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\core\System.Notifications.Core.Domain\System.Notifications.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\adpaters\System.Notifications.Adpater.DataBase.MongoDB\System.Notifications.Adpater.DataBase.MongoDB.csproj" />
+    <ProjectReference Include="..\System.Notifications.Core.Domain.Tests\System.Notifications.Core.Domain.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

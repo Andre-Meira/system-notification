@@ -4,7 +4,7 @@ namespace System.Notifications.Core.Domain.Events;
 
 public record EventsRegistrys : Entity
 {
-    public EventsRegistrys(string code, string name, string description)
+    public EventsRegistrys(Guid id, string code, string name, string description)
     {
         Code = code;
         Name = name;
@@ -12,6 +12,8 @@ public record EventsRegistrys : Entity
 
         CreatedAt = DateTime.UtcNow;
         IsEnabled = true;
+
+        Create(id);
     }
 
     public string Code { get; init; }

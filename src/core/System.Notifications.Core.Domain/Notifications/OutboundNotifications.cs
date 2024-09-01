@@ -1,13 +1,17 @@
-﻿namespace System.Notifications.Core.Domain.Notifications;
+﻿using System.Notifications.Core.Domain.Abstracts.Domain;
+using System.Notifications.Core.Domain.Notifications.Enums;
 
-public record OutboundNotifications 
+namespace System.Notifications.Core.Domain.Notifications;
+
+public record OutboundNotifications : Entity
 {
-    public OutboundNotifications(string code, string name, string description)
+    public OutboundNotifications(Guid id, string code, string name, string description)
     {
         Code = code;
         Name = name;
         Description = description;
         IsEnabled = true;
+        Create(id);
     }
 
     public string Code { get; init; }
@@ -15,4 +19,15 @@ public record OutboundNotifications
     public string Description { get; init; }
 
     public bool IsEnabled { get; init; }
+
+    public static explicit operator OutboundNotificationsType(OutboundNotifications outbound)
+    {
+        return outbound.Code switch
+        {
+            "SMS" => OutboundNotificationsType.Sms,
+            "Email" => OutboundNotificationsType.Email,
+            "WebSocket" => OutboundNotificationsType.WebScokets,
+            _ => throw new NotImplementedException(outbound.Code)    
+        };
+    }
 }

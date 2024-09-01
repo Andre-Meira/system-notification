@@ -6,7 +6,7 @@ public record UserNotificationsParameters : Entity
 {
     private readonly List<UserNotificationSettings> _notificationSettings;
 
-    public UserNotificationsParameters(string emailAddress, string contact)
+    public UserNotificationsParameters(Guid id, string emailAddress, string contact)
     {
         EmailAddress = emailAddress;
         Contact = contact;
@@ -15,6 +15,7 @@ public record UserNotificationsParameters : Entity
         CreatedAt = DateTime.Now;
 
         _notificationSettings = new List<UserNotificationSettings>();
+        Create(id);
     }
 
     public string EmailAddress { get; private set; } = null!;
@@ -28,7 +29,7 @@ public record UserNotificationsParameters : Entity
 
     public IReadOnlyCollection<UserNotificationSettings> NotificationSettings => _notificationSettings;
 
-    public void AddSenttings(UserNotificationSettings notificationSettings)
+    public void AddSetting(UserNotificationSettings notificationSettings)
     {        
         _notificationSettings.Add(notificationSettings);
         UpdatedAt = DateTime.Now;
