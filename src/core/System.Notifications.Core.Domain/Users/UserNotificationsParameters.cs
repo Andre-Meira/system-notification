@@ -29,9 +29,24 @@ public record UserNotificationsParameters : Entity
 
     public IReadOnlyCollection<UserNotificationSettings> NotificationSettings => _notificationSettings;
 
-    public void AddSetting(UserNotificationSettings notificationSettings)
-    {        
-        _notificationSettings.Add(notificationSettings);
+    public void AddRangeSetting(List<UserNotificationSettings> notificationSettings)
+    {
+        _notificationSettings.AddRange(notificationSettings);
         UpdatedAt = DateTime.Now;
-    }    
+    }
+
+    public void Disable()
+    {
+        EmailAddress = "";
+        Contact = "";
+        IsEnabled = false;
+        UpdatedAt = DateTime.Now;
+    }
+
+    public void Update(string email, string contanct)
+    {
+        EmailAddress = email;
+        Contact = contanct;
+        UpdatedAt = DateTime.Now;
+    }
 }

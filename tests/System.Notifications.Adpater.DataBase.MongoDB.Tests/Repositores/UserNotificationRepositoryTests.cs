@@ -15,11 +15,16 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
 
     public UserNotificationRepositoryTests(MongoDbFixture mongoDbFixture)
     {
-        UserNotification.AddSetting(new UserNotificationSettings
-        (
-            OutboundNotificationRepositoryTests.OutboundNotifications,
-            EventsRepositoryTests.EventsRegistrys
-        ));
+        var userNotifications = new List<UserNotificationSettings>
+        {
+            new UserNotificationSettings
+            (
+                OutboundNotificationRepositoryTests.OutboundNotifications,
+                EventsRepositoryTests.EventsRegistrys
+            )
+        };
+
+        UserNotification.AddRangeSetting(userNotifications);
 
         _userNotificationRepository = mongoDbFixture.userNotificationRepository;
     }
