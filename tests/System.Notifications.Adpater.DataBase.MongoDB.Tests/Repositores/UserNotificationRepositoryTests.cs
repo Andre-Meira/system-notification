@@ -1,4 +1,5 @@
-﻿using System.Notifications.Core.Domain.Users;
+﻿using System.Notifications.Core.Domain.Orders;
+using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
@@ -15,7 +16,15 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
 
     public UserNotificationRepositoryTests(MongoDbFixture mongoDbFixture)
     {
-        var userNotifications = new List<UserNotificationSettings>
+        _userNotificationRepository = mongoDbFixture.userNotificationRepository;
+    }
+
+    [Fact]
+    public async Task Cria_Uma_Nova_Parametrizacao_De_Notificacao_De_Usuario_Com_Sucesso()
+    {
+        var userNotifications = UserNotification;
+
+        var userNotificationSettings = new List<UserNotificationSettings>
         {
             new UserNotificationSettings
             (
@@ -24,24 +33,34 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
             )
         };
 
-        UserNotification.AddRangeSetting(userNotifications);
+        userNotifications.AddRangeSetting(userNotificationSettings);
 
-        _userNotificationRepository = mongoDbFixture.userNotificationRepository;
-    }
-
-    [Fact]
-    public async Task Cria_Uma_Nova_Saida_De_Notificacao_Com_Sucesso()
-    {
-        await _userNotificationRepository.SaveChangeAsync(UserNotification);
-        var registry = await _userNotificationRepository.GeyByIdAsync(UserNotification.Id);
+        await _userNotificationRepository.SaveChangeAsync(userNotifications);
+        var registry = await _userNotificationRepository.GeyByIdAsync(userNotifications.Id);
 
         Assert.NotNull(registry);
     }
 
     [Fact]
-    public async Task Procura_Uma_Saida_De_Notificacao_Inexistente_Retorna_Null()
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Inexistente_Retorna_Null()
+    {
+        var registry = await _userNotificationRepository.GeyByIdAsync(UserNotification.Id);
+        Assert.NotNull(registry);
+    }
+
+    [Fact]
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Existente_Retorna_Entidade()
     {
         var registry = await _userNotificationRepository.GeyByIdAsync(Guid.NewGuid());
         Assert.Null(registry);
+    }
+
+    [Fact]
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Baseado_Em_Um_Filtro_Retona_Uma_Lista()
+    {
+        var registry = await _userNotificationRepository
+            .FilterAsync(e => e.NotificationSettings.Where(e => e.EventCode == "process-order").Any());
+
+        Assert.NotEmpty(registry);
     }
 }

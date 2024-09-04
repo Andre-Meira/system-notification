@@ -11,7 +11,15 @@ internal sealed class MongoContextConfiguration
 {
     public static void RegisterClassMap()
     {
-        BsonClassMap.TryRegisterClassMap<UserNotificationsParameters>();
+        BsonClassMap.TryRegisterClassMap<UserNotificationsParameters>(classMap =>
+        {
+            classMap.AutoMap();
+            classMap.SetIgnoreExtraElements(true);
+
+            classMap.MapField("_notificationSettings")
+                .SetElementName(nameof(UserNotificationsParameters.NotificationSettings));
+        });
+
         BsonClassMap.TryRegisterClassMap<OutboundNotifications>();
         BsonClassMap.TryRegisterClassMap<NotificationContext>();
         BsonClassMap.TryRegisterClassMap<EventsRegistrys>();

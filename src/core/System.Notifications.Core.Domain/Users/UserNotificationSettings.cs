@@ -4,7 +4,7 @@ using System.Notifications.Core.Domain.Notifications;
 namespace System.Notifications.Core.Domain.Users;
 
 public class UserNotificationSettings
-{
+{ 
     public UserNotificationSettings(OutboundNotifications outbound, EventsRegistrys eventsRegistrys)
     {
         EventCode = eventsRegistrys.Code;
