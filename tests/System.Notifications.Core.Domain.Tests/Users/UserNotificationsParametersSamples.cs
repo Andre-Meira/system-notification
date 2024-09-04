@@ -6,30 +6,28 @@ namespace System.Notifications.Core.Domain.Tests.Users;
 
 internal class UserNotificationsParametersSamples
 {
-    public static List<UserNotificationsParameters> GetSamples()
+    public readonly IList<UserNotificationsParameters> List = new List<UserNotificationsParameters>()
     {
-        var userNotificationsSettings = new List<UserNotificationSettings>
+        new UserNotificationsParameters(Guid.Parse("A5CD6946-916E-43ED-BA0F-69EAF7C436F5"), "teste@hotmail.com", "0000000"),
+        new UserNotificationsParameters(Guid.Parse("320E50A7-0D83-4859-8AC5-0C4986A322BF"), "teste1@hotmail.com", "0000001"),
+        new UserNotificationsParameters(Guid.Parse("7005C012-B135-4887-930D-056C7F577967"), "teste2@hotmail.com", "0000002")
+    };
+   
+
+    public IList<UserNotificationsParameters> AddOrReplace(UserNotificationsParameters value)
+    {
+        var valueExisted = List.FirstOrDefault(e => e.Id == value.Id);
+
+        if (valueExisted is null)
         {
-            new UserNotificationSettings
-            (
-                new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"), "SMS", "SMS Service", ""),
-                new EventsRegistrys(Guid.Parse("EAF28619-32C2-4220-B298-C588D1F9943D"), "process-order", "processa ordens", "")
-            )
-        };
+            List.Add(value);
+            return List;
+        }
 
-        var notification = new UserNotificationsParameters(Guid.NewGuid(), "teste@hotmail.com", "0000000");
-        notification.AddRangeSetting(userNotificationsSettings);
+        List.Remove(valueExisted);
+        List.Add(value);
 
-        var notification1 = new UserNotificationsParameters(Guid.NewGuid(), "teste1@hotmail.com", "0000001");
-        notification1.AddRangeSetting(userNotificationsSettings);
-
-        var notification2 = new UserNotificationsParameters(Guid.NewGuid(), "teste2@hotmail.com", "0000002");
-        notification2.AddRangeSetting(userNotificationsSettings);
-
-
-        return new List<UserNotificationsParameters>
-        {
-            notification, notification1, notification2
-        }; 
+        return List;
     }
 }
+
