@@ -28,7 +28,7 @@ public sealed class BasicEventConsumer : IEventConsumerService
         _eventsRepository = eventsRepository;
     }
 
-    public async Task<IEnumerable<NotificationContext>> PublishEventAsync(
+    public async Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
         NotificationMessage notificationMessage, 
         CancellationToken cancellationToken = default)
     {

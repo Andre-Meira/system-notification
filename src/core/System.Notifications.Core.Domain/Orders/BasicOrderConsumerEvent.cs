@@ -19,6 +19,6 @@ public sealed class BasicOrderConsumerEvent : IOrderEvent
             "Pagamento criado e logo caira para aprovação",
             order);
 
-        return _eventConsumerService.PublishEventAsync(@event);
+        return _eventConsumerService.PublishNotificationAsync(@event);
     }
 }

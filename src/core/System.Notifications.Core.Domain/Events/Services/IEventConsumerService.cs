@@ -4,7 +4,7 @@ namespace System.Notifications.Core.Domain.Events.Services;
 
 public interface IEventConsumerService
 {
-    Task<IEnumerable<NotificationContext>> PublishEventAsync(
+    Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
         NotificationMessage notificationMessage,
         CancellationToken cancellationToken = default);
 }

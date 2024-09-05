@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configurations\" />
+    <ProjectReference Include="..\..\core\System.Notifications.Core.Domain\System.Notifications.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

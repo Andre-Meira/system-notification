@@ -38,7 +38,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishEventAsync(@event);
+        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
 
         var notificationError = notifications.Where(e => e.Error.Any());
         Assert.Empty(notificationError);
@@ -52,7 +52,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishEventAsync(@event);
+        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
         Assert.Empty(notifications);
     }
 }

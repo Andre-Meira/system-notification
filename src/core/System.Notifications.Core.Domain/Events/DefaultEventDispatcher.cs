@@ -1,11 +1,12 @@
 ﻿using System.Collections.Concurrent;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace System.Notifications.Core.Domain.Events;
 
 public sealed class DefaultEventDispatcher : EventDispatcherBase
 {
-    private readonly ConcurrentDictionary<string, List<Delegate>> _handlers = new();
+    private static readonly ConcurrentDictionary<string, List<Delegate>> _handlers = new();
 
     public override void SubscribeAtEvent<T>(string eventCode, Func<T, Task> handler) where T : class
     {
@@ -32,7 +33,9 @@ public sealed class DefaultEventDispatcher : EventDispatcherBase
             {
                 var parameter = handlers[index].Method.GetParameters()[0].ParameterType;
 
-                string objectString = JsonSerializer.Serialize(@event);
+                dynamic @object = @event;
+
+                string objectString = JsonSerializer.Serialize(@object);
                 var argument = JsonSerializer.Deserialize(objectString, parameter);
 
                 ArgumentNullException.ThrowIfNull(argument);
