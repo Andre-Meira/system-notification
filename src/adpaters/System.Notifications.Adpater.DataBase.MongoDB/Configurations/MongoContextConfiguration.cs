@@ -29,8 +29,16 @@ internal sealed class MongoContextConfiguration
                     .SetElementName(nameof(UserNotificationsParameters.NotificationSettings));
         });
 
+        BsonClassMap.TryRegisterClassMap<NotificationContext>(classMap =>
+        {
+            classMap.AutoMap();
+            classMap.SetIgnoreExtraElements(true);
+
+            classMap.MapField("_error")
+                    .SetElementName(nameof(NotificationContext.Error));
+        });
+
         BsonClassMap.TryRegisterClassMap<OutboundNotifications>();
-        BsonClassMap.TryRegisterClassMap<NotificationContext>();
         BsonClassMap.TryRegisterClassMap<EventsRegistrys>();
         BsonClassMap.TryRegisterClassMap<NotificationMessage>();
     }

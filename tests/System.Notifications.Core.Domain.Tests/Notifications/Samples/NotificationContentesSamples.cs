@@ -2,9 +2,9 @@
 using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Tests.Events;
 
-namespace System.Notifications.Core.Domain.Tests.Notifications;
+namespace System.Notifications.Core.Domain.Tests.Notifications.Samples;
 
-public class SamplesNotifications
+public class NotificationContentesSamples
 {
     public static NotificationContext CreateNotificationSMS()
     {
@@ -12,15 +12,15 @@ public class SamplesNotifications
         OutboundNotifications outbound = new OutboundNotifications(Guid.NewGuid(),
             "SMS", "SMS Service", "envia notificações atraves de SMS");
 
-        EventsRegistrys eventsRegistrys = new EventsRegistrys(Guid.NewGuid(), 
+        EventsRegistrys eventsRegistrys = new EventsRegistrys(Guid.NewGuid(),
             nameof(SampleEvent.SampleOrder), "Sample Order", "");
 
         NotificationMessage notification = new NotificationMessage(
-            nameof(SampleEvent.SampleOrder), 
-            "order publicada com sucesso", 
-            "ordem 123 criada", 
+            nameof(SampleEvent.SampleOrder),
+            "order publicada com sucesso",
+            "ordem 123 criada",
             new SampleEvent.SampleOrder("teste"));
 
-        return new NotificationContext(Guid.NewGuid(), userID, outbound, eventsRegistrys, notification);
+        return new NotificationContext(Guid.NewGuid(), userID, notification, eventsRegistrys, outbound);
     }
 }

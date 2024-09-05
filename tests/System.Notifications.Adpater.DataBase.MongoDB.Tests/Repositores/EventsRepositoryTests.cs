@@ -1,14 +1,12 @@
 ﻿using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
+using System.Notifications.Core.Domain.Tests.Events.Samples;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
 
 public class EventsRepositoryTests : IClassFixture<MongoDbFixture>
 {
-    public static EventsRegistrys EventsRegistrys => new EventsRegistrys(
-            Guid.Parse("EAF28619-32C2-4220-B298-C588D1F9943D"),
-            "process-order", "processa ordens",
-            "notificação sempre sera lançada quando uma ordem for conlucida");
+    public static EventsRegistrys EventsRegistrys => new EventsRegistrysSamples().OrderEvent;
 
     private readonly IEventsRepository _eventsRepository;
 

@@ -5,12 +5,14 @@ namespace System.Notifications.Core.Domain.Notifications;
 
 public record NotificationContext : Entity 
 {
+    private List<string> _error = new List<string>();
+
     public NotificationContext(
         Guid id,
         Guid userNotificationsId,
-        OutboundNotifications outboundNotifications,
-        EventsRegistrys eventsRegistrys,
-        NotificationMessage notificationMessage)
+        NotificationMessage notificationMessage,
+        EventsRegistrys? eventsRegistrys,
+        OutboundNotifications? outboundNotifications)
     {
         UserNotificationsId = userNotificationsId;
         OutboundNotifications = outboundNotifications;
@@ -23,18 +25,25 @@ public record NotificationContext : Entity
 
     public Guid UserNotificationsId { get; init; }
 
-    public OutboundNotifications OutboundNotifications { get; init; }
+    public OutboundNotifications? OutboundNotifications { get; init; }
 
-    public EventsRegistrys EventsRegistrys { get; init; }
+    public EventsRegistrys? EventsRegistrys { get; init; }
 
     public NotificationMessage NotificationMessage { get; init; }
 
     public bool IsDelivered { get; private set; } = false;
-    public bool IsConfirmed { get; private set; } = false; 
+    public bool IsConfirmed { get; private set; } = false;
+
+    public IReadOnlyCollection<string> Error => _error;
 
     public DateTime CreatedAt {  get; init; }
     public DateTime? DeliveredAt { get; private set; }
     public DateTime? ConfirmedAt { get; private set; }
+
+    public void AddErrors(List<string> error)
+    {
+        _error.AddRange(error);
+    }
 
     public void ConfirmDelivered()
     {

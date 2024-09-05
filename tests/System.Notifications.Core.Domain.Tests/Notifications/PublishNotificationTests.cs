@@ -1,5 +1,6 @@
 ﻿using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Notifications.Services;
+using System.Notifications.Core.Domain.Tests.Notifications.Samples;
 
 namespace System.Notifications.Core.Domain.Tests.Notifications;
 
@@ -15,7 +16,7 @@ public class PublishNotificationTests : IClassFixture<IntegrationTests>
     [Fact]
     public async Task teste()
     {
-        var notification = SamplesNotifications.CreateNotificationSMS();
+        var notification = NotificationContentesSamples.CreateNotificationSMS();
         await _publishNotification.PublishAsync(new List<NotificationContext> { notification });
     }
 }

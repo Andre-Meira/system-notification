@@ -1,5 +1,6 @@
 ﻿using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Tests.Notifications.Samples;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
 
@@ -7,10 +8,7 @@ public class OutboundNotificationRepositoryTests : IClassFixture<MongoDbFixture>
 {
     private readonly IOutboundNotificationRepository _outboundNotification;
 
-    public static OutboundNotifications OutboundNotifications => 
-            new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"),
-                "SMS", "SMS Service",
-                "envia notificações atraves de SMS");
+    public static OutboundNotifications OutboundNotifications => new OutBoundNotificationSamples().Sms;
 
     public OutboundNotificationRepositoryTests(MongoDbFixture mongoDbFixture)
     {
@@ -37,7 +35,6 @@ public class OutboundNotificationRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Procura_Uma_Saida_De_Notificacao_Pelo_Codigo()
     {
         await _outboundNotification.SaveChangeAsync(OutboundNotifications);
-
         var registry = await _outboundNotification.GeyByCodeAsync("SMS");
         Assert.NotNull(registry);
     }
