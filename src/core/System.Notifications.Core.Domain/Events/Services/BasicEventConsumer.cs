@@ -65,7 +65,9 @@ public sealed class BasicEventConsumer : IEventConsumerService
             }
         }
 
-        await _publishNotification.PublishAsync(notificationContextList, cancellationToken);
+        var notificationPublishs = notificationContextList.Where(e => e.Error.Count == 0).ToList();
+        await _publishNotification.PublishAsync(notificationPublishs, cancellationToken);
+
         return notificationContextList;
     }
 }
