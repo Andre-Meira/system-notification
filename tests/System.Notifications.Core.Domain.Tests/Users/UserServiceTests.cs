@@ -11,14 +11,18 @@ public class UserServiceTests
 {
 	private readonly IUserService _userService;
 	private readonly UserNotificationsParametersSamples _userNotificationsParametersSamples;
+	private static readonly OutboundNotifications outbound = new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"), "SMS", "SMS Service", "");
+	private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrys(Guid.Parse("EAF28619-32C2-4220-B298-C588D1F9943D"), "process-order", "processa ordens", "");
 
     private readonly List<UserNotificationSettings> userNotificationsSettings = new List<UserNotificationSettings>
 	{
 		new UserNotificationSettings
 		(
-			new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"), "SMS", "SMS Service", ""),
-			new EventsRegistrys(Guid.Parse("EAF28619-32C2-4220-B298-C588D1F9943D"), "process-order", "processa ordens", "")
-		)
+            eventsRegistrys.Id,
+			outbound.Id,
+            eventsRegistrys.Code,
+            outbound.Code
+        )
 	};
 
 	public UserServiceTests()

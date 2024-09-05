@@ -5,13 +5,17 @@ namespace System.Notifications.Core.Domain.Users;
 
 public class UserNotificationSettings
 { 
-    public UserNotificationSettings(OutboundNotifications outbound, EventsRegistrys eventsRegistrys)
+    public UserNotificationSettings(
+        Guid eventId, 
+        Guid outboundId,
+        string eventCode,
+        string outboundCode)
     {
-        EventCode = eventsRegistrys.Code;
-        EventId = eventsRegistrys.Id;
+        EventCode = eventCode;
+        EventId = eventId;
 
-        OutboundNotificationCode = outbound.Code;
-        OutboundNotificationId = outbound.Id;
+        OutboundNotificationCode = outboundCode;
+        OutboundNotificationId = outboundId;
 
         CreatedAt = DateTime.Now;
         IsEnabled = true;

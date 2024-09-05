@@ -19,10 +19,14 @@ internal class UserNotificationRepository(MongoContext mongoContext) : IUserNoti
             options: new ReplaceOptions { IsUpsert = true },
             cancellationToken: cancellationToken);
 
-    public async Task<List<UserNotificationsParameters>> FilterAsync(Expression<Func<UserNotificationsParameters, bool>> expression, 
+    public async Task<List<UserNotificationsParameters>> FindUserByEventCodeAsync(string eventCde,
             CancellationToken cancellationToken = default)
     {
-        var listAsync = await mongoContext.UserNotificationParameter.FindAsync(expression);
+        var filter = Builders<UserNotificationsParameters>.Filter
+            .ElemMatch(nameof(UserNotificationsParameters.NotificationSettings),
+                       Builders<UserNotificationSettings>.Filter.Eq("EventCode", "process-order"));
+
+        var listAsync = await mongoContext.UserNotificationParameter.FindAsync(filter);
         return listAsync.ToList();
     }
 }

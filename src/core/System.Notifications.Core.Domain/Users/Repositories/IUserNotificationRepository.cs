@@ -10,6 +10,6 @@ public interface IUserNotificationRepository
     public Task<UserNotificationsParameters?> GeyByIdAsync(Guid id, 
         CancellationToken cancellation = default);
 
-    public Task<List<UserNotificationsParameters>> FilterAsync(Expression<Func<UserNotificationsParameters, bool>> expression,
+    public Task<List<UserNotificationsParameters>> FindUserByEventCodeAsync(string code,
             CancellationToken cancellationToken = default);
 }

@@ -4,7 +4,7 @@ namespace System.Notifications.Core.Domain.Users;
 
 public record UserNotificationsParameters : Entity
 {
-    private readonly List<UserNotificationSettings> _notificationSettings;
+    private List<UserNotificationSettings> _notificationSettings;
 
     public UserNotificationsParameters(Guid id, string emailAddress, string contact)
     {

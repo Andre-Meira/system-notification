@@ -1,5 +1,4 @@
-﻿using System.Notifications.Core.Domain.Orders;
-using System.Notifications.Core.Domain.Users;
+﻿using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
@@ -28,8 +27,10 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
         {
             new UserNotificationSettings
             (
-                OutboundNotificationRepositoryTests.OutboundNotifications,
-                EventsRepositoryTests.EventsRegistrys
+                EventsRepositoryTests.EventsRegistrys.Id,
+                OutboundNotificationRepositoryTests.OutboundNotifications.Id,
+                EventsRepositoryTests.EventsRegistrys.Code,
+                OutboundNotificationRepositoryTests.OutboundNotifications.Code
             )
         };
 
@@ -42,25 +43,23 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
     }
 
     [Fact]
-    public async Task Procura_Uma_Parametrizacao_de_Usuario_Inexistente_Retorna_Null()
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Existente_Retorna_Entidade()
     {
         var registry = await _userNotificationRepository.GeyByIdAsync(UserNotification.Id);
         Assert.NotNull(registry);
     }
 
     [Fact]
-    public async Task Procura_Uma_Parametrizacao_de_Usuario_Existente_Retorna_Entidade()
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Inexistente_Retorna_Null()
     {
         var registry = await _userNotificationRepository.GeyByIdAsync(Guid.NewGuid());
         Assert.Null(registry);
     }
 
     [Fact]
-    public async Task Procura_Uma_Parametrizacao_de_Usuario_Baseado_Em_Um_Filtro_Retona_Uma_Lista()
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Baseado_no_EventCode_Retorna_Lista_de_Usuarios()
     {
-        var registry = await _userNotificationRepository
-            .FilterAsync(e => e.NotificationSettings.Where(e => e.EventCode == "process-order").Any());
-
+        var registry = await _userNotificationRepository.FindUserByEventCodeAsync("process-order");
         Assert.NotEmpty(registry);
     }
 }
