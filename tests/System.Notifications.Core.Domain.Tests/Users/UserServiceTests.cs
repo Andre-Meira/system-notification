@@ -18,9 +18,9 @@ public class UserServiceTests
 	private static readonly OutboundNotifications outbound = new OutBoundNotificationSamples().Sms;
 	private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrysSamples().OrderEvent;
 
-    private readonly List<UserNotificationSettingsRequest> userNotificationsSettings = new List<UserNotificationSettingsRequest>
+    private readonly List<UserNotificationSettingsModel> userNotificationsSettings = new List<UserNotificationSettingsModel>
 	{
-		new UserNotificationSettingsRequest
+		new UserNotificationSettingsModel
         (
 			eventsRegistrys.Id,
 			outbound.Id
@@ -56,7 +56,7 @@ public class UserServiceTests
 	[Fact]
 	public async Task Cria_Um_Usuario_Valido()
 	{
-		var userNotification = new UserNotificationsRequest("teste@hotmail.com", "00000", userNotificationsSettings);
+		var userNotification = new UserNotificationsModel("teste@hotmail.com", "00000", userNotificationsSettings);
 
 		Guid id = await _userService.CreateAsync(userNotification, CancellationToken.None);
 		Assert.NotEqual(Guid.Empty, id);
@@ -69,7 +69,7 @@ public class UserServiceTests
 		var userEmailOriginal = user.EmailAddress;
 		var userContactOriginal = user.Contact;
 
-		var userRequest = new UserNotificationsRequest("testeNovo@hotmail.com", "00000121231", userNotificationsSettings);
+		var userRequest = new UserNotificationsModel("testeNovo@hotmail.com", "00000121231", userNotificationsSettings);
 
         await _userService.UpdateAsync(user.Id, userRequest);
         var userChange = _userNotificationsParametersSamples.List.FirstOrDefault(e => e.Id == user.Id)!;

@@ -22,7 +22,7 @@ public sealed class UserService : IUserService
         _eventsRepository = eventsRepository;
     }
 
-    public async Task<Guid> CreateAsync(UserNotificationsRequest user, CancellationToken cancellation = default)
+    public async Task<Guid> CreateAsync(UserNotificationsModel user, CancellationToken cancellation = default)
     {
         Guid userId = Guid.NewGuid();
 
@@ -31,7 +31,7 @@ public sealed class UserService : IUserService
 
         for (int index = 0; index < user.Settings.Count; index++)
         {
-            UserNotificationSettingsRequest userNotificationSettings = user.Settings[index];
+            UserNotificationSettingsModel userNotificationSettings = user.Settings[index];
 
             EventsRegistrys? @event = await _eventsRepository.GeyByIdAsync(userNotificationSettings.EventId);
             
@@ -53,7 +53,7 @@ public sealed class UserService : IUserService
     }
    
 
-    public async Task UpdateAsync(Guid id, UserNotificationsRequest user, CancellationToken cancellation = default)
+    public async Task UpdateAsync(Guid id, UserNotificationsModel user, CancellationToken cancellation = default)
     {
         UserNotificationsParameters? userNotifications = await _repository.GeyByIdAsync(id, cancellation);
 
@@ -64,7 +64,7 @@ public sealed class UserService : IUserService
 
         for (int index = 0; index < user.Settings.Count; index++)
         {
-            UserNotificationSettingsRequest userNotificationSettings = user.Settings[index];
+            UserNotificationSettingsModel userNotificationSettings = user.Settings[index];
 
             EventsRegistrys? @event = await _eventsRepository.GeyByIdAsync(userNotificationSettings.EventId);
 

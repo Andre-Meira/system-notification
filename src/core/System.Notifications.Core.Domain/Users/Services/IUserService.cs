@@ -2,9 +2,9 @@
 
 public interface IUserService
 {
-    public Task<Guid> CreateAsync(UserNotificationsRequest user, CancellationToken cancellation = default);
+    public Task<Guid> CreateAsync(UserNotificationsModel user, CancellationToken cancellation = default);
 
-    public Task UpdateAsync(Guid id, UserNotificationsRequest user, CancellationToken cancellation = default);
+    public Task UpdateAsync(Guid id, UserNotificationsModel user, CancellationToken cancellation = default);
 
     public Task DeleteAsync(Guid userId, CancellationToken cancellation = default);
 

@@ -10,13 +10,13 @@ namespace System.Notifications.Servers.API.Controllers.Parameters;
 public class UsersNotificationController(IUserService userService) : ControllerBase
 {
     [HttpPost("create-user")]
-    public async Task<IActionResult> CreateUser([FromBody, Required] UserNotificationModel UserNotificationModel)
+    public async Task<IActionResult> CreateUser([FromBody, Required] UserNotificationRequestModel UserNotificationModel)
     {        
         return Ok(UserNotificationModel);
     }
 
     [HttpPost("update-user")]
-    public async Task<IActionResult> UpdateUser([FromBody, Required] UserNotificationModel UserNotificationModel)
+    public async Task<IActionResult> UpdateUser([FromBody, Required] UserNotificationRequestModel UserNotificationModel)
     {
         return Ok(UserNotificationModel);
     }
