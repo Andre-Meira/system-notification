@@ -1,6 +1,9 @@
 ﻿using Moq;
 using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Tests.Events.Samples;
+using System.Notifications.Core.Domain.Tests.Integration;
+using System.Notifications.Core.Domain.Tests.Notifications.Samples;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 using System.Notifications.Core.Domain.Users.Services;
@@ -11,18 +14,17 @@ public class UserServiceTests
 {
 	private readonly IUserService _userService;
 	private readonly UserNotificationsParametersSamples _userNotificationsParametersSamples;
-	private static readonly OutboundNotifications outbound = new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"), "SMS", "SMS Service", "");
-	private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrys(Guid.Parse("EAF28619-32C2-4220-B298-C588D1F9943D"), "process-order", "processa ordens", "");
 
-    private readonly List<UserNotificationSettings> userNotificationsSettings = new List<UserNotificationSettings>
+	private static readonly OutboundNotifications outbound = new OutBoundNotificationSamples().Sms;
+	private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrysSamples().OrderEvent;
+
+    private readonly List<UserNotificationSettingsRequest> userNotificationsSettings = new List<UserNotificationSettingsRequest>
 	{
-		new UserNotificationSettings
-		(
-            eventsRegistrys.Id,
-			outbound.Id,
-            eventsRegistrys.Code,
-            outbound.Code
-        )
+		new UserNotificationSettingsRequest
+        (
+			eventsRegistrys.Id,
+			outbound.Id
+		)
 	};
 
 	public UserServiceTests()
@@ -45,7 +47,10 @@ public class UserServiceTests
 				return Task.FromResult(userNotificationsParameters.List.FirstOrDefault(e => e.Id == id));
 			});
 
-		_userService = new UserService(userMock.Object);
+		var outboudRepository = new OutboundNotificationRepositoryFixture().OutboundNotificationRepository;
+		var eventRegistry = new EventsRepositoryFixture().EventsRepository;
+
+        _userService = new UserService(userMock.Object, outboudRepository, eventRegistry);
 	}
 
 	[Fact]
