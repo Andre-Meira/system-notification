@@ -15,7 +15,7 @@ public class OrderController : ControllerBase
         _publisEvent = publisEvent;
     }
 
-    [HttpPost("create-order")]
+    [HttpPost("notificar-ordem-processada")]
     public async Task<IActionResult> CreateOrder([FromBody] Order order, CancellationToken cancellationToken = default)
     {
         var @event = new EventBase("process-order", order);
