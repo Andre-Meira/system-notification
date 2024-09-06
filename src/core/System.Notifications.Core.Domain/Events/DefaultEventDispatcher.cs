@@ -32,8 +32,9 @@ public sealed class DefaultEventDispatcher : EventDispatcherBase
             for (int index = 0; index < handlers.Count; index++)
             {
                 var parameter = handlers[index].Method.GetParameters()[0].ParameterType;
-                
-                var argument = JsonSerializer.Deserialize(@event.ToString()!, parameter);
+
+                string objectString = JsonSerializer.Serialize(@event);
+                var argument = JsonSerializer.Deserialize(objectString, parameter);
 
                 ArgumentNullException.ThrowIfNull(argument);
 
