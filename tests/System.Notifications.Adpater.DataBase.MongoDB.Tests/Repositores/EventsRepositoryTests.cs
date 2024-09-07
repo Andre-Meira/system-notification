@@ -19,7 +19,7 @@ public class EventsRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Cria_Um_Novo_Evento_Com_Sucesso()
     {
         await _eventsRepository.SaveChangeAsync(EventsRegistrys);
-        var registry = await _eventsRepository.GeyByIdAsync(EventsRegistrys.Id);
+        var registry = await _eventsRepository.GetByIdAsync(EventsRegistrys.Id);
 
         Assert.NotNull(registry);
     }
@@ -27,7 +27,7 @@ public class EventsRepositoryTests : IClassFixture<MongoDbFixture>
     [Fact]
     public async Task Procura_Um_Evento_Inexistente_Retorna_Null()
     {
-        var registry = await _eventsRepository.GeyByIdAsync(Guid.NewGuid());
+        var registry = await _eventsRepository.GetByIdAsync(Guid.NewGuid());
 
         Assert.Null(registry);
     }
@@ -36,7 +36,7 @@ public class EventsRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Procura_Um_Evento_De_Notificacao_Pelo_Codigo()
     {
         await _eventsRepository.SaveChangeAsync(EventsRegistrys);
-        var registry = await _eventsRepository.GeyByCodeAsync("process-order");
+        var registry = await _eventsRepository.GetByCodeAsync("process-order");
 
         Assert.NotNull(registry);
     }

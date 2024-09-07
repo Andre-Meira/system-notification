@@ -7,11 +7,11 @@ namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
 
 internal class EventsRepository(MongoContext mongoContext) : IEventsRepository
 {
-    public async Task<EventsRegistrys?> GeyByCodeAsync(string code, CancellationToken cancellation = default)
+    public async Task<EventsRegistrys?> GetByCodeAsync(string code, CancellationToken cancellation = default)
         => await mongoContext.EventsRegistrys.Find(e => e.Code == code)
             .FirstOrDefaultAsync(cancellationToken: cancellation);
 
-    public async Task<EventsRegistrys?> GeyByIdAsync(Guid id, CancellationToken cancellation = default)
+    public async Task<EventsRegistrys?> GetByIdAsync(Guid id, CancellationToken cancellation = default)
         => await mongoContext.EventsRegistrys.Find(e => e.Id == id)
             .FirstOrDefaultAsync(cancellationToken: cancellation);
 

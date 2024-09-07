@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Tests.Notifications.Samples;
 
@@ -15,11 +16,27 @@ public class OutboundNotificationRepositoryFixture
         var listOutbound = new OutBoundNotificationSamples().List;
 
         outboundNotificationRepository.Setup(e =>
-            e.GeyByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())
+            e.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())
          )
         .Returns((Guid id, CancellationToken _) =>
         {
             return Task.FromResult(listOutbound.FirstOrDefault(e => e.Id == id));
+        });
+
+        outboundNotificationRepository.Setup(e =>
+            e.GetByCodeAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())
+         )
+        .Returns((string code, CancellationToken _) =>
+        {
+            return Task.FromResult(listOutbound.FirstOrDefault(e => e.Code == code));
+        });
+
+        outboundNotificationRepository.Setup(e =>
+            e.SaveChangeAsync(It.IsAny<OutboundNotifications>(), It.IsAny<CancellationToken>())
+         )
+        .Callback((OutboundNotifications notification, CancellationToken _) =>
+        {
+            listOutbound.Add(notification);
         });
 
         OutboundNotificationRepository = outboundNotificationRepository.Object;

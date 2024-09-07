@@ -43,8 +43,8 @@ public sealed class BasicEventConsumer : IEventConsumerService
             {
                 var errorList = new List<string>();
 
-                EventsRegistrys? eventRegistry = await _eventsRepository.GeyByIdAsync(userSettings.EventId);
-                OutboundNotifications? outBound = await _outboundNotificationRepository.GeyByIdAsync(userSettings.OutboundNotificationId);
+                EventsRegistrys? eventRegistry = await _eventsRepository.GetByIdAsync(userSettings.EventId);
+                OutboundNotifications? outBound = await _outboundNotificationRepository.GetByIdAsync(userSettings.OutboundNotificationId);
 
                 if (eventRegistry == null)
                     errorList.Add("event registry not implementation");
