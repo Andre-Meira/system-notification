@@ -3,7 +3,7 @@ using System.Notifications.Core.Domain.Events;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Dispatchs;
 
-public class EventDispatchs(IPublishContext publishContext) : IPublisEvent
+public class EventDispatchs(IPublishContext publishContext) : IPublishEvent
 {
     public Task PublishAsync(EventBase @event, CancellationToken cancellationToken)
         => publishContext.PublishTopicMessage(@event, ConstantsRoutings.ExchageEvent);

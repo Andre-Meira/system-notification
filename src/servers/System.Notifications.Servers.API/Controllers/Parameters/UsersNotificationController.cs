@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Services;
 using System.Notifications.Servers.API.Models.Parameters;
 
@@ -10,14 +11,36 @@ namespace System.Notifications.Servers.API.Controllers.Parameters;
 public class UsersNotificationController(IUserService userService) : ControllerBase
 {
     [HttpPost("create-user")]
-    public async Task<IActionResult> CreateUser([FromBody, Required] UserNotificationRequestModel UserNotificationModel)
-    {        
-        return Ok(UserNotificationModel);
+    public async Task<IActionResult> Create([FromBody, Required] UserNotificationRequestModel UserNotificationModel)
+    {
+        Guid id = await userService
+            .CreateAsync((UserNotificationsModel)UserNotificationModel)
+            .ConfigureAwait(false);
+
+        return Ok(new { userId = id, message = "usuario criado" });
     }
 
-    [HttpPost("update-user")]
-    public async Task<IActionResult> UpdateUser([FromBody, Required] UserNotificationRequestModel UserNotificationModel)
+    [HttpPut("update-user/{userId}")]
+    public async Task<IActionResult> Update(
+        [FromQuery, Required] Guid userId,
+        [FromBody, Required] UserNotificationRequestModel UserNotificationModel,
+        CancellationToken cancellationToken = default)
     {
-        return Ok(UserNotificationModel);
+        await userService
+            .UpdateAsync(userId, (UserNotificationsModel)UserNotificationModel, cancellationToken)
+            .ConfigureAwait(false);
+
+        return Ok(new { userId, message = "usuario alterado" });
+    }
+
+    [HttpDelete("disable-user/{userId}")]
+    public async Task<IActionResult> Disable(
+        [FromQuery, Required] Guid userId,
+        CancellationToken cancellationToken = default)
+    {
+        await userService.DeleteAsync(userId, cancellationToken)
+            .ConfigureAwait(false);
+
+        return Ok(new { userId, message = "usuario desativado" });
     }
 }

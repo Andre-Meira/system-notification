@@ -1,6 +1,6 @@
 ﻿namespace System.Notifications.Core.Domain.Events;
 
-public interface IPublisEvent
+public interface IPublishEvent
 {
     public Task PublishAsync(EventBase @event, CancellationToken cancellationToken);
 }

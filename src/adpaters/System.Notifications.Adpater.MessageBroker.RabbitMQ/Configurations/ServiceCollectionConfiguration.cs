@@ -13,7 +13,7 @@ public static class ServiceCollectionConfiguration
         IAsyncConnectionFactory asyncConnection)
     {
         services.AddBus(asyncConnection);
-        services.AddScoped<IPublisEvent, EventDispatchs>();
+        services.AddScoped<IPublishEvent, EventDispatchs>();
 
         services.AddConsumer<EventConsumer, EventBase>(e =>
         {
