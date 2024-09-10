@@ -25,7 +25,7 @@ public sealed class PublishNotification : IPublishNotification
 
         foreach (var notifications in notificationGroup)
         {
-            var channelsType = (OutboundNotificationsType)notifications.Key;
+            var channelsType = (OutboundNotificationsType)notifications.Key!;
             INotificationChannel channel = _notificationChannelFactory.CreateChannel(channelsType);
 
             List<NotificationContext> notificationGrouped = notifications.ToList();

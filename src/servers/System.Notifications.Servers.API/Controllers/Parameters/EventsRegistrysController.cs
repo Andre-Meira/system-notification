@@ -23,7 +23,7 @@ public class EventsRegistrysController(IEventRegistryService Service) : Controll
 
     [HttpPut("update-event/{eventId}")]
     public async Task<IActionResult> Update(
-        [FromQuery, Required] Guid eventId,
+        Guid eventId,
         [FromBody, Required] EventRegistrysRequestModel eventRegistry,
         CancellationToken cancellationToken = default)
     {
@@ -36,7 +36,7 @@ public class EventsRegistrysController(IEventRegistryService Service) : Controll
 
     [HttpDelete("disable-event/{eventId}")]
     public async Task<IActionResult> Disable(
-        [FromQuery, Required] Guid eventId,
+        Guid eventId,
         CancellationToken cancellationToken = default)
     {
         await Service.DeleteAsync(eventId, cancellationToken)

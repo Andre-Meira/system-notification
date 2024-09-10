@@ -21,8 +21,7 @@ public class UsersNotificationController(IUserService userService) : ControllerB
     }
 
     [HttpPut("update-user/{userId}")]
-    public async Task<IActionResult> Update(
-        [FromQuery, Required] Guid userId,
+    public async Task<IActionResult> Update(Guid userId,
         [FromBody, Required] UserNotificationRequestModel UserNotificationModel,
         CancellationToken cancellationToken = default)
     {
@@ -34,8 +33,7 @@ public class UsersNotificationController(IUserService userService) : ControllerB
     }
 
     [HttpDelete("disable-user/{userId}")]
-    public async Task<IActionResult> Disable(
-        [FromQuery, Required] Guid userId,
+    public async Task<IActionResult> Disable(Guid userId,
         CancellationToken cancellationToken = default)
     {
         await userService.DeleteAsync(userId, cancellationToken)

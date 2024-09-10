@@ -1,4 +1,5 @@
-﻿using System.Notifications.Core.Domain.Notifications.Enums;
+﻿using System.Notifications.Core.Domain.Abstracts.Exceptions;
+using System.Notifications.Core.Domain.Notifications.Enums;
 
 namespace System.Notifications.Core.Domain.Notifications.Services;
 
@@ -21,7 +22,7 @@ public sealed class NotificationChannelFactory : INotificationChannelFactory
             OutboundNotificationsType.Email => GetService<IEmailNotification>(),
             OutboundNotificationsType.Sms => GetService<ISmsNotification>(),
             OutboundNotificationsType.WebScokets => GetService<ISocketNotification>(),
-            _ => throw new ArgumentException("Canal de notificação não suportado")
+            _ => throw new ExceptionDomain("Canal de notificação não suportado")
         };
     }
 
@@ -30,7 +31,7 @@ public sealed class NotificationChannelFactory : INotificationChannelFactory
         var service = _serviceProvider.GetService(typeof(T));
 
         if (service is null)
-            throw new ArgumentException($"notificação nao implementada {nameof(T)}");
+            throw new ExceptionDomain($"notificação nao implementada {nameof(T)}");
 
         return (T)service;
     }

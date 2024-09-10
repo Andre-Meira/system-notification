@@ -30,7 +30,10 @@ public static class ServiceCollectionConfiguration
         services.AddScoped<IEventConsumerService, BasicEventConsumer>();
         services.AddScoped<IPublishNotification, PublishNotification>();
         services.AddScoped<INotificationChannelFactory, NotificationChannelFactory>();
+        
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IEventRegistryService, EventRegistryService>();
+        services.AddScoped<IOutboundNotificationService, OutboundNotificationService>();
 
         services.AddScoped<IOrderEvent, BasicOrderConsumerEvent>();
         

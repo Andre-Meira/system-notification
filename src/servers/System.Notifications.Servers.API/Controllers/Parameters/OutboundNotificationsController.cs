@@ -21,8 +21,7 @@ public class OutboundNotificationsController(IOutboundNotificationService Servic
     }
 
     [HttpPut("update-outbound/{outboundId}")]
-    public async Task<IActionResult> Update(
-        [FromQuery, Required] Guid outboundId,
+    public async Task<IActionResult> Update(Guid outboundId,
         [FromBody, Required] OutboundNotificationRequestModel outboundNotification,
         CancellationToken cancellationToken = default)
     {
@@ -34,8 +33,7 @@ public class OutboundNotificationsController(IOutboundNotificationService Servic
     }
 
     [HttpDelete("disable-outbound/{outboundId}")]
-    public async Task<IActionResult> Disable(
-        [FromQuery, Required] Guid outboundId,
+    public async Task<IActionResult> Disable(Guid outboundId,
         CancellationToken cancellationToken = default)
     {
         await Service.DeleteAsync(outboundId, cancellationToken)

@@ -95,7 +95,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             var context = new ConsumerContext<TMessage>(message, args.DeliveryTag, _channel);
             await consumerHandler.Consumer(context).ConfigureAwait(false);
         }
-        catch (Exception err) when (err is not ArgumentException)
+        catch (Exception err) when (err is not ArgumentNullException)
         {
             _logger.LogError("Consumer: {0}, error: {1}", consumerHandler.GetType().Name, err.Message);
             activityBus?.AddExceptionEvent(err);
@@ -121,7 +121,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
 
             if (message is null)
             {
-                throw new ArgumentException("message is null");
+                throw new ArgumentNullException("message is null");
             }
 
             return message;

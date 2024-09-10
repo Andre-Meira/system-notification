@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Notifications.Core.Domain.Abstracts.Exceptions;
 using System.Text;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Extesions;
@@ -18,7 +19,8 @@ public static class MessageExtesions
 
         IMessage? messageObject = JsonConvert.DeserializeObject<IMessage>(json);
 
-        if (messageObject is null) throw new ArgumentException($"Não foi possivel transforma message em {nameof(message)}");        
+        if (messageObject is null) 
+            throw new ExceptionDomain($"Não foi possivel transforma message em {nameof(message)}");
 
         return messageObject;
     }

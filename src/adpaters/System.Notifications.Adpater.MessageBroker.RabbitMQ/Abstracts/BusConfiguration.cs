@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Models;
+using System.Notifications.Core.Domain.Abstracts.Exceptions;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts;
 
@@ -57,7 +58,7 @@ public static class BusConfiguration
 
             if (consumerHandlerInstance is null)
             {
-                throw new ArgumentException("Não foi possivel criar a instancia");
+                throw new ExceptionDomain("Não foi possivel criar a instancia");
             }
 
             return (ConsumerHandlerBase<IMessage, TConsumerHandler>)consumerHandlerInstance;
@@ -73,7 +74,7 @@ public static class BusConfiguration
 
         if (consumer is null)
         {
-            throw new ArgumentException($"O consumer {typeof(TConsumerHandler).Name}, não possui uma message vinculada");
+            throw new ExceptionDomain($"O consumer {typeof(TConsumerHandler).Name}, não possui uma message vinculada");
         }
 
         return consumer;
