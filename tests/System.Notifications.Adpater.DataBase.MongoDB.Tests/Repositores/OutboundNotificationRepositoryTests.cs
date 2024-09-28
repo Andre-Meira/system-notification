@@ -1,5 +1,5 @@
-﻿using System.Notifications.Core.Domain.Notifications.Repositories;
-using System.Notifications.Core.Domain.Notifications;
+﻿using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Tests.Notifications.Samples;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
@@ -17,7 +17,7 @@ public class OutboundNotificationRepositoryTests : IClassFixture<MongoDbFixture>
 
     [Fact]
     public async Task Cria_Uma_Nova_Saida_De_Notificacao_Com_Sucesso()
-    { 
+    {
         await _outboundNotification.SaveChangeAsync(OutboundNotifications);
         var registry = await _outboundNotification.GetByIdAsync(OutboundNotifications.Id);
 

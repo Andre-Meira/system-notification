@@ -17,7 +17,7 @@ public sealed class NotificationChannelFactory : INotificationChannelFactory
 
     public INotificationChannel CreateChannel(OutboundNotificationsType channel)
     {
-        return channel switch 
+        return channel switch
         {
             OutboundNotificationsType.Email => GetService<IEmailNotification>(),
             OutboundNotificationsType.Sms => GetService<ISmsNotification>(),

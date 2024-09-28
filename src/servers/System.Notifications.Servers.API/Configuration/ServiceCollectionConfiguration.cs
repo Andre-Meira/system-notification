@@ -1,8 +1,8 @@
 ﻿using RabbitMQ.Client;
-using System.Notifications.Adpater.DataBase.MongoDB.Options;
-using System.Notifications.Adpater.OutBound.Email.Configuration;
 using System.Notifications.Adpater.DataBase.MongoDB.Configurations;
+using System.Notifications.Adpater.DataBase.MongoDB.Options;
 using System.Notifications.Adpater.MessageBroker.RabbitMQ.Configurations;
+using System.Notifications.Adpater.OutBound.Email.Configuration;
 
 namespace System.Notifications.Servers.API.Configuration;
 

@@ -10,9 +10,9 @@ public sealed class BasicOrderConsumerEvent : IOrderEvent
     public BasicOrderConsumerEvent(IEventConsumerService eventConsumerService)
     {
         _eventConsumerService = eventConsumerService;
-    } 
+    }
 
-    public  Task ProcessedOrderCreated(Order order)
+    public Task ProcessedOrderCreated(Order order)
     {
         var @event = new NotificationMessage("process-order",
             "Ordem processada com sucesso",

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace System.Notifications.Core.Domain.Events;
@@ -16,7 +15,7 @@ public sealed class DefaultEventDispatcher : EventDispatcherBase
             _handlers[eventCode] = handlers;
         }
 
-        handlers.Add(handler);        
+        handlers.Add(handler);
     }
 
     public override async Task PublishEventAsync<T>(string eventCode, T @event) where T : class

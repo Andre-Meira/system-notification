@@ -1,6 +1,5 @@
 ﻿using System.Notifications.Core.Domain.Abstracts.Exceptions;
 using System.Notifications.Core.Domain.Notifications.Repositories;
-using System.Security.Cryptography;
 
 namespace System.Notifications.Core.Domain.Notifications.Services;
 
@@ -18,7 +17,7 @@ public interface IOutboundNotificationService
 
 public sealed class OutboundNotificationService(IOutboundNotificationRepository repository) : IOutboundNotificationService
 {
-    public async Task<Guid> CreateAsync(OutboundNotificationModel outboundModel, 
+    public async Task<Guid> CreateAsync(OutboundNotificationModel outboundModel,
         CancellationToken cancellationToken = default)
     {
         Guid id = Guid.NewGuid();
@@ -28,8 +27,8 @@ public sealed class OutboundNotificationService(IOutboundNotificationRepository 
         if (outbound is not null)
             throw new ExceptionDomain("O serviço de notificação já existe.");
 
-        OutboundNotifications outboundNotification = new OutboundNotifications(id, 
-            outboundModel.Code, 
+        OutboundNotifications outboundNotification = new OutboundNotifications(id,
+            outboundModel.Code,
             outboundModel.Name,
             outboundModel.Description);
 
@@ -52,7 +51,7 @@ public sealed class OutboundNotificationService(IOutboundNotificationRepository 
     public Task<IEnumerable<OutboundNotifications>> GetAllAsync(CancellationToken cancellation = default)
         => repository.GetAllAsync(cancellation);
 
-    public async Task UpdateAsync(Guid id, OutboundNotificationModel outboundModel, 
+    public async Task UpdateAsync(Guid id, OutboundNotificationModel outboundModel,
         CancellationToken cancellationToken = default)
     {
         OutboundNotifications? outbound = await repository.GetByIdAsync(id, cancellationToken);

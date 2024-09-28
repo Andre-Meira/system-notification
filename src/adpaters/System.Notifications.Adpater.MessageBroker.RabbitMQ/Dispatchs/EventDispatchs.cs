@@ -7,5 +7,5 @@ public class EventDispatchs(IPublishContext publishContext) : IPublishEvent
 {
     public Task PublishAsync(EventBase @event, CancellationToken cancellationToken)
         => publishContext.PublishTopicMessage(@event, ConstantsRoutings.ExchageEvent);
-    
+
 }

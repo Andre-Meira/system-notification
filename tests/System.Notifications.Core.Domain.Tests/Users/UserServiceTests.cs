@@ -12,64 +12,64 @@ namespace System.Notifications.Core.Domain.Tests.Users;
 
 public class UserServiceTests
 {
-	private readonly IUserService _userService;
-	private readonly UserNotificationsParametersSamples _userNotificationsParametersSamples;
+    private readonly IUserService _userService;
+    private readonly UserNotificationsParametersSamples _userNotificationsParametersSamples;
 
-	private static readonly OutboundNotifications outbound = new OutBoundNotificationSamples().Sms;
-	private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrysSamples().OrderEvent;
+    private static readonly OutboundNotifications outbound = new OutBoundNotificationSamples().Sms;
+    private static readonly EventsRegistrys eventsRegistrys = new EventsRegistrysSamples().OrderEvent;
 
     private readonly List<UserNotificationSettingsModel> userNotificationsSettings = new List<UserNotificationSettingsModel>
-	{
-		new UserNotificationSettingsModel
+    {
+        new UserNotificationSettingsModel
         (
-			eventsRegistrys.Id,
-			outbound.Id
-		)
-	};
+            eventsRegistrys.Id,
+            outbound.Id
+        )
+    };
 
-	public UserServiceTests()
-	{
-		var userNotificationsParameters = new UserNotificationsParametersSamples();
+    public UserServiceTests()
+    {
+        var userNotificationsParameters = new UserNotificationsParametersSamples();
         _userNotificationsParametersSamples = userNotificationsParameters;
 
         var userMock = new Mock<IUserNotificationRepository>();
-		userMock.Setup(e =>
-			e.SaveChangeAsync(It.IsAny<UserNotificationsParameters>(), It.IsAny<CancellationToken>())
-		)
-		.Callback((UserNotificationsParameters userParameter, CancellationToken _) =>
-		{
+        userMock.Setup(e =>
+            e.SaveChangeAsync(It.IsAny<UserNotificationsParameters>(), It.IsAny<CancellationToken>())
+        )
+        .Callback((UserNotificationsParameters userParameter, CancellationToken _) =>
+        {
             userNotificationsParameters.AddOrReplace(userParameter);
-		});
+        });
 
-		userMock.Setup(e => e.GeyByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-			.Returns((Guid id, CancellationToken _) =>
-			{
-				return Task.FromResult(userNotificationsParameters.List.FirstOrDefault(e => e.Id == id));
-			});
+        userMock.Setup(e => e.GeyByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .Returns((Guid id, CancellationToken _) =>
+            {
+                return Task.FromResult(userNotificationsParameters.List.FirstOrDefault(e => e.Id == id));
+            });
 
-		var outboudRepository = new OutboundNotificationRepositoryFixture().OutboundNotificationRepository;
-		var eventRegistry = new EventsRepositoryFixture().EventsRepository;
+        var outboudRepository = new OutboundNotificationRepositoryFixture().OutboundNotificationRepository;
+        var eventRegistry = new EventsRepositoryFixture().EventsRepository;
 
         _userService = new UserService(userMock.Object, outboudRepository, eventRegistry);
-	}
+    }
 
-	[Fact]
-	public async Task Cria_Um_Usuario_Valido()
-	{
-		var userNotification = new UserNotificationsModel("teste@hotmail.com", "00000", userNotificationsSettings);
+    [Fact]
+    public async Task Cria_Um_Usuario_Valido()
+    {
+        var userNotification = new UserNotificationsModel("teste@hotmail.com", "00000", userNotificationsSettings);
 
-		Guid id = await _userService.CreateAsync(userNotification, CancellationToken.None);
-		Assert.NotEqual(Guid.Empty, id);
-	}
+        Guid id = await _userService.CreateAsync(userNotification, CancellationToken.None);
+        Assert.NotEqual(Guid.Empty, id);
+    }
 
-	[Fact]
-	public async Task Atualiza_Um_Usuario()
-	{
-		var user = _userNotificationsParametersSamples.List.FirstOrDefault()!;
-		var userEmailOriginal = user.EmailAddress;
-		var userContactOriginal = user.Contact;
+    [Fact]
+    public async Task Atualiza_Um_Usuario()
+    {
+        var user = _userNotificationsParametersSamples.List.FirstOrDefault()!;
+        var userEmailOriginal = user.EmailAddress;
+        var userContactOriginal = user.Contact;
 
-		var userRequest = new UserNotificationsModel("testeNovo@hotmail.com", "00000121231", userNotificationsSettings);
+        var userRequest = new UserNotificationsModel("testeNovo@hotmail.com", "00000121231", userNotificationsSettings);
 
         await _userService.UpdateAsync(user.Id, userRequest);
         var userChange = _userNotificationsParametersSamples.List.FirstOrDefault(e => e.Id == user.Id)!;
@@ -78,21 +78,21 @@ public class UserServiceTests
         Assert.True(
             userEmailOriginal.Equals(userChange.EmailAddress) == false &&
             userContactOriginal.Equals(userChange.Contact) == false
-		);
+        );
     }
 
 
-	[Fact]
-	public async Task Desativa_Usuario()
-	{
+    [Fact]
+    public async Task Desativa_Usuario()
+    {
         var user = _userNotificationsParametersSamples.List.FirstOrDefault()!;
 
         await _userService.DeleteAsync(user.Id);
         var userChange = _userNotificationsParametersSamples.List.FirstOrDefault(e => e.Id == user.Id)!;
 
         Assert.True(
-            string.IsNullOrEmpty(userChange.Contact) && 
-			string.IsNullOrEmpty(userChange.EmailAddress) &&
+            string.IsNullOrEmpty(userChange.Contact) &&
+            string.IsNullOrEmpty(userChange.EmailAddress) &&
             userChange.IsEnabled == false
         );
     }

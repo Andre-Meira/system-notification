@@ -19,7 +19,7 @@ public class EventRegistryServiceTests
 
     [Fact]
     public async Task Cria_Um_Evento_Que_Ja_Exite_Retorna_ExceptionDomain()
-    { 
+    {
         var model = new EventRegistrysModel("process-order",
             "processa ordens",
             "notificação sempre sera lançada quando uma ordem for conlucida");

@@ -1,5 +1,5 @@
-using System.Notifications.Servers.API.Configuration;
 using System.Notifications.Core.ServiceDefaults;
+using System.Notifications.Servers.API.Configuration;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);

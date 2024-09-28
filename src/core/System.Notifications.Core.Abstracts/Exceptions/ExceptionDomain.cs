@@ -4,7 +4,7 @@ namespace System.Notifications.Core.Domain.Abstracts.Exceptions;
 
 public class ExceptionDomain : Exception
 {
-    public List<NotificationDomain>? Messages { get; }    
+    public List<NotificationDomain>? Messages { get; }
 
     public ExceptionDomain(string message) : base(message) { }
 

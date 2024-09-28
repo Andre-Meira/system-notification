@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Services;
 using System.Notifications.Servers.API.Models.Parameters;
-using System.Notifications.Core.Domain.Events;
 
 namespace System.Notifications.Servers.API.Controllers.Parameters;
 

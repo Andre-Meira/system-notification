@@ -9,7 +9,7 @@ namespace System.Notifications.Servers.API.Controllers;
 public class EventsController(IPublishEvent publish) : ControllerBase
 {
     [HttpPost("notificar-ordem-processada")]
-    public async Task<IActionResult> CreateOrder([FromBody] Order order, 
+    public async Task<IActionResult> CreateOrder([FromBody] Order order,
         CancellationToken cancellationToken = default)
     {
         var @event = new EventBase("process-order", order);

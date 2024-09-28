@@ -1,6 +1,4 @@
-﻿using System.Notifications.Core.Domain.Users;
-
-namespace System.Notifications.Core.Domain.Notifications.Repositories;
+﻿namespace System.Notifications.Core.Domain.Notifications.Repositories;
 
 public interface INotificationRepository
 {

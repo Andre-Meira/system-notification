@@ -2,7 +2,6 @@
 using System.Notifications.Adpater.DataBase.MongoDB.Contexts;
 using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
-using System.Runtime.InteropServices;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
 
@@ -22,7 +21,7 @@ internal class EventsRepository(MongoContext mongoContext) : IEventsRepository
     public Task SaveChangeAsync(EventsRegistrys eventsRegistrys, CancellationToken cancellationToken = default)
         => mongoContext.EventsRegistrys.ReplaceOneAsync(
                 filter: e => e.Id == eventsRegistrys.Id,
-                replacement: eventsRegistrys, 
+                replacement: eventsRegistrys,
                 options: new ReplaceOptions { IsUpsert = true },
                 cancellationToken: cancellationToken);
 }

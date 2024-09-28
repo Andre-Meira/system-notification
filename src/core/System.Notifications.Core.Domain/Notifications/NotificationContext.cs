@@ -3,7 +3,7 @@ using System.Notifications.Core.Domain.Events;
 
 namespace System.Notifications.Core.Domain.Notifications;
 
-public record NotificationContext : Entity 
+public record NotificationContext : Entity
 {
     private List<string> _error = new List<string>();
 
@@ -36,7 +36,7 @@ public record NotificationContext : Entity
 
     public IReadOnlyCollection<string> Error => _error;
 
-    public DateTime CreatedAt {  get; init; }
+    public DateTime CreatedAt { get; init; }
     public DateTime? DeliveredAt { get; private set; }
     public DateTime? ConfirmedAt { get; private set; }
 

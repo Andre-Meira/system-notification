@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Notifications;
 
 namespace System.Notifications.Servers.API.Models.Parameters;

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using RabbitMQ.Client;
-using System.Threading.Channels;
+﻿using RabbitMQ.Client;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Models;
 
@@ -13,7 +11,7 @@ public interface IConsumerOptions
 
     public string ExchangeConsumer { get; protected set; }
     public string ExchangeTypeConsumer { get; protected set; }
-    
+
     //TODO
     public IFaultConsumerConfiguration? FaultConfig { get; protected set; }
 
@@ -41,7 +39,7 @@ internal record ConsumerOptions : IConsumerOptions
 
     IFaultConsumerConfiguration? IConsumerOptions.FaultConfig { get; set; }
 
-    public IConsumerOptions Configure(string exchange, 
+    public IConsumerOptions Configure(string exchange,
         string exchangeType, string routingKey = "",
         Dictionary<string, object>? arguments = null)
     {

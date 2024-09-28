@@ -4,13 +4,13 @@ namespace System.Notifications.Core.Domain.Abstracts.Domain;
 
 public interface IEventDispatcher
 {
-    void Subscribe<T>(Func<T,Task> handler) where T : class;
+    void Subscribe<T>(Func<T, Task> handler) where T : class;
     Task PublishAsync<T>(T @event) where T : DomainEvents;
 }
 
 public class EventDispatcher : IEventDispatcher
 {
-    private readonly ConcurrentDictionary<Type, List<Delegate>> _handlers = new();  
+    private readonly ConcurrentDictionary<Type, List<Delegate>> _handlers = new();
 
     public void Subscribe<T>(Func<T, Task> handler) where T : class
     {

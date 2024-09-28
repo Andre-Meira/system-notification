@@ -13,10 +13,10 @@ internal sealed class MongoContext
     public IMongoCollection<UserNotificationsParameters> UserNotificationParameter
         => _database.GetCollection<UserNotificationsParameters>("user-notification-parameter");
 
-    public IMongoCollection<OutboundNotifications> OutboundNotifications => 
+    public IMongoCollection<OutboundNotifications> OutboundNotifications =>
         _database.GetCollection<OutboundNotifications>("outbound-notifications");
 
-    public IMongoCollection<NotificationContext> NotificationContext => 
+    public IMongoCollection<NotificationContext> NotificationContext =>
         _database.GetCollection<NotificationContext>("notifications");
 
     public IMongoCollection<EventsRegistrys> EventsRegistrys =>

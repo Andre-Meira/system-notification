@@ -1,7 +1,7 @@
 ﻿using Moq;
+using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
 using System.Notifications.Core.Domain.Tests.Events.Samples;
-using System.Notifications.Core.Domain.Events;
 
 namespace System.Notifications.Core.Domain.Tests.Integration;
 

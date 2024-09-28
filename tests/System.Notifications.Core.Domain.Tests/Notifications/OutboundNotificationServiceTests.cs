@@ -73,7 +73,7 @@ public class OutboundNotificationServiceTests
     public async Task Desativa_Um_Servico_De_Notificacao_Que_Ja_Existe_Retorna_Sucesso()
     {
         var outboud = await repository.GetByCodeAsync("SMS");
-        
+
         await service.DeleteAsync(outboud!.Id);
 
         var outboudUpdated = await repository.GetByIdAsync(outboud.Id);

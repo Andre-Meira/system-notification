@@ -19,10 +19,10 @@ public record UserNotificationsParameters : Entity
     }
 
     public string EmailAddress { get; private set; } = null!;
-    
-    public string Contact {  get; private set; } = null!;
 
-    public DateTime CreatedAt { get; init; } 
+    public string Contact { get; private set; } = null!;
+
+    public DateTime CreatedAt { get; init; }
     public DateTime? UpdatedAt { get; private set; }
 
     public bool IsEnabled { get; private set; }

@@ -8,7 +8,7 @@ public abstract record Entity : INotificationsDomain
     public Guid Id => _id;
 
     private readonly List<NotificationDomain> _notifications = new List<NotificationDomain>();
-    
+
     protected virtual void Create(Guid id = default)
     {
         Validate();
@@ -16,18 +16,18 @@ public abstract record Entity : INotificationsDomain
         if (_id.Equals(Guid.Empty) == false)
             throw new ExceptionDomain("já existe um id cadastrado para essa entidade.");
 
-        _id = id == default ? Guid.NewGuid(): id;
+        _id = id == default ? Guid.NewGuid() : id;
     }
 
     public virtual void Validate()
     {
         bool isInvalid = AnyNotificaion();
 
-        if (isInvalid == false) 
-            return;            
-        
+        if (isInvalid == false)
+            return;
+
         throw new ExceptionDomain(_notifications);
-    }    
+    }
 
     public bool AnyNotificaion() => _notifications.Any();
     public void AddNotificationDomain(NotificationDomain notification) => _notifications.Add(notification);

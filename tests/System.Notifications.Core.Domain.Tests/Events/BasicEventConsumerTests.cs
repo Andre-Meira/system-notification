@@ -18,7 +18,7 @@ public class BasicEventConsumerTests
         var outboundNotificationRepositoryFixture = new OutboundNotificationRepositoryFixture();
         var userNotificationRepositoryFixture = new UserNotificationRepositoryFixture();
 
-        var publishNotification = new Mock<IPublishNotification>();        
+        var publishNotification = new Mock<IPublishNotification>();
 
         EventConsumerSer = new BasicEventConsumer
             (

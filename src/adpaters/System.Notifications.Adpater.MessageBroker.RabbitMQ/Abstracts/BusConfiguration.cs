@@ -44,7 +44,7 @@ public static class BusConfiguration
         {
             var interfaceFault = GetConsumerInterface<TConsumerHandler>(typeof(IConsumerFaultHandler<>));
             services.AddScoped(interfaceFault, optitons.FaultConfig.Consumer);
-        }        
+        }
 
         services.AddHostedService((provider) =>
         {
@@ -67,7 +67,7 @@ public static class BusConfiguration
         return services;
     }
 
-    
+
     private static Type GetConsumerInterface<TConsumerHandler>(Type baseType)
     {
         var consumer = typeof(TConsumerHandler).GetInterface(baseType.Name);

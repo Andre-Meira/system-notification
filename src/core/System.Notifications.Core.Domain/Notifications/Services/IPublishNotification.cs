@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Notifications.Core.Domain.Notifications.Enums;
+﻿using System.Notifications.Core.Domain.Notifications.Enums;
 
 namespace System.Notifications.Core.Domain.Notifications.Services;
 
 public interface IPublishNotification
-{    
+{
     public Task PublishAsync(List<NotificationContext> notificationContexts, CancellationToken cancellationToken = default);
 }
 
@@ -16,9 +15,9 @@ public sealed class PublishNotification : IPublishNotification
     public PublishNotification(INotificationChannelFactory notificationChannelFactory)
     {
         _notificationChannelFactory = notificationChannelFactory;
-    }    
+    }
 
-    public async Task PublishAsync(List<NotificationContext> notificationContexts, 
+    public async Task PublishAsync(List<NotificationContext> notificationContexts,
         CancellationToken cancellationToken = default)
     {
         var notificationGroup = notificationContexts.GroupBy(e => e.OutboundNotifications);

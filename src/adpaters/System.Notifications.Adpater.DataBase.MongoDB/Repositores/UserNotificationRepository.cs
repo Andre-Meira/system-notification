@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using System.Linq.Expressions;
 using System.Notifications.Adpater.DataBase.MongoDB.Contexts;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;

@@ -1,5 +1,4 @@
-﻿using System.Notifications.Core.Domain.Events;
-using System.Notifications.Core.Domain.Notifications;
+﻿using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Tests.Events;
 

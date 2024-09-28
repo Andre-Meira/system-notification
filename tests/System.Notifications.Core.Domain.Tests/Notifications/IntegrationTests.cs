@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Notifications.Core.Domain.Notifications.Services;
 using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Notifications.Services;
 
 namespace System.Notifications.Core.Domain.Tests.Notifications;
 

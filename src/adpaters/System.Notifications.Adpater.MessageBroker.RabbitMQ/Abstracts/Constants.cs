@@ -21,7 +21,7 @@ internal class ActivityConstants
     public const string MessageExchangeType = "message.exchageType";
 
     public const string MessageException = "message.exception";
-    public const string MessageExceptionType = "message.exceptionType";    
+    public const string MessageExceptionType = "message.exceptionType";
 
     public const string ConsumerName = "Consumer.name";
     public const string ConsumerRouting = "Consumer.routing";

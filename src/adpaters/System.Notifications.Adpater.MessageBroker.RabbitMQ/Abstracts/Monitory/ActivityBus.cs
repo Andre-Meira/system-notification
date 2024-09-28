@@ -47,7 +47,7 @@ public readonly struct ActivityBus
     {
         _activity.Start();
 
-        _activity.SetTag(ActivityConstants.Hostname, Dns.GetHostName());        
+        _activity.SetTag(ActivityConstants.Hostname, Dns.GetHostName());
         _activity.SetTag(ActivityConstants.TraceId, _activity.TraceId);
         _activity.SetTag(ActivityConstants.SpanId, _activity.SpanId);
     }

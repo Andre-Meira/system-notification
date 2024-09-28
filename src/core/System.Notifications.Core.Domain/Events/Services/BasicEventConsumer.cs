@@ -29,7 +29,7 @@ public sealed class BasicEventConsumer : IEventConsumerService
     }
 
     public async Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
-        NotificationMessage notificationMessage, 
+        NotificationMessage notificationMessage,
         CancellationToken cancellationToken = default)
     {
         var notificationContextList = new List<NotificationContext>();

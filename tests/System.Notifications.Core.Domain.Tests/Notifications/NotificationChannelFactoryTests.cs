@@ -6,7 +6,7 @@ using System.Notifications.Core.Domain.Notifications.Services;
 
 namespace System.Notifications.Core.Domain.Tests.Notifications;
 
-public class NotificationChannelFactoryTests :  IClassFixture<IntegrationTests>
+public class NotificationChannelFactoryTests : IClassFixture<IntegrationTests>
 {
     private readonly INotificationChannelFactory notificationChannelFactory;
 

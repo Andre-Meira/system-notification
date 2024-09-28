@@ -3,9 +3,7 @@ using System.Notifications.Adpater.DataBase.MongoDB.Configurations;
 using System.Notifications.Adpater.DataBase.MongoDB.Options;
 using System.Notifications.Core.Domain.Events.Repositories;
 using System.Notifications.Core.Domain.Notifications.Repositories;
-using System.Notifications.Core.Domain.Notifications.Services;
 using System.Notifications.Core.Domain.Users.Repositories;
-using Testcontainers.MongoDb;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests;
 
@@ -34,7 +32,7 @@ public class MongoDbFixture : IAsyncLifetime
         notificationRepository = ServiceProvider.GetRequiredService<INotificationRepository>();
         outboundNotificationRepository = ServiceProvider.GetRequiredService<IOutboundNotificationRepository>();
         userNotificationRepository = ServiceProvider.GetRequiredService<IUserNotificationRepository>();
-        
+
     }
 
     public Task DisposeAsync()
