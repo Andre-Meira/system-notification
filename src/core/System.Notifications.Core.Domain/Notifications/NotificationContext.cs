@@ -48,7 +48,7 @@ public record NotificationContext : Entity
     public void ConfirmDelivered()
     {
         IsConfirmed = true;
-        ConfirmedAt = DateTime.UtcNow;
+        DeliveredAt = DateTime.UtcNow;
     }
 
     public void ConfirmReceipt()
