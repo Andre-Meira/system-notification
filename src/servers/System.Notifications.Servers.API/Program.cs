@@ -1,4 +1,5 @@
 using System.Notifications.Servers.API.Configuration;
+using System.Notifications.Core.ServiceDefaults;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration);
+
+builder.AddServiceDefaults();
 
 var app = builder.Build();
 
