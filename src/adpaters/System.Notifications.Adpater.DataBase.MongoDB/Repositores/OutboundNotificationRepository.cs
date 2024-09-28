@@ -7,6 +7,9 @@ namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
 
 internal sealed class OutboundNotificationRepository(MongoContext mongoContext) : IOutboundNotificationRepository
 {
+    public async Task<IEnumerable<OutboundNotifications>> GetAllAsync(CancellationToken cancellation = default)
+        => await mongoContext.OutboundNotifications.AsQueryable().ToListAsync(cancellation);
+
     public async Task<OutboundNotifications?> GetByCodeAsync(string code, CancellationToken cancellation = default)
         => await mongoContext.OutboundNotifications.Find(e => e.Code == code)
             .FirstOrDefaultAsync(cancellationToken: cancellation);

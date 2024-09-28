@@ -12,4 +12,6 @@ public interface IUserNotificationRepository
 
     public Task<IEnumerable<UserNotificationsParameters>> FindUserByEventCodeAsync(string code,
             CancellationToken cancellationToken = default);
+
+    public Task<IEnumerable<UserNotificationsParameters>> GetAllUsers(CancellationToken cancellation = default);
 }

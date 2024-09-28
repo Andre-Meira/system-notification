@@ -100,4 +100,7 @@ public sealed class UserService : IUserService
 
 	public Task<UserNotificationsParameters?> FindByIdAsync(Guid userId, CancellationToken cancellation = default)
 		=> _repository.GeyByIdAsync(userId, cancellation);
+
+    public Task<IEnumerable<UserNotificationsParameters>> GettAllUsers(CancellationToken cancellation = default)
+        => _repository.GetAllUsers(cancellation);
 }

@@ -7,4 +7,6 @@ public interface IEventRegistryService
     Task UpdateAsync(Guid id, EventRegistrysModel eventRegistry, CancellationToken cancellationToken = default);
 
     public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    public Task<IEnumerable<EventsRegistrys>> GetAllAsync(CancellationToken cancellationToken = default);
 }

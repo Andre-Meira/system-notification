@@ -1,5 +1,6 @@
 ﻿using System.Notifications.Core.Domain.Abstracts.Exceptions;
 using System.Notifications.Core.Domain.Notifications.Repositories;
+using System.Security.Cryptography;
 
 namespace System.Notifications.Core.Domain.Notifications.Services;
 
@@ -10,6 +11,8 @@ public interface IOutboundNotificationService
     Task UpdateAsync(Guid id, OutboundNotificationModel outboundModel, CancellationToken cancellationToken = default);
 
     public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    public Task<IEnumerable<OutboundNotifications>> GetAllAsync(CancellationToken cancellation = default);
 }
 
 
@@ -46,6 +49,8 @@ public sealed class OutboundNotificationService(IOutboundNotificationRepository 
         await repository.SaveChangeAsync(outbound, cancellationToken);
     }
 
+    public Task<IEnumerable<OutboundNotifications>> GetAllAsync(CancellationToken cancellation = default)
+        => repository.GetAllAsync(cancellation);
 
     public async Task UpdateAsync(Guid id, OutboundNotificationModel outboundModel, 
         CancellationToken cancellationToken = default)

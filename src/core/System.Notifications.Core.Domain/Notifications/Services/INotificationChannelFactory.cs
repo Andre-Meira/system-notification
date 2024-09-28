@@ -31,7 +31,7 @@ public sealed class NotificationChannelFactory : INotificationChannelFactory
         var service = _serviceProvider.GetService(typeof(T));
 
         if (service is null)
-            throw new ExceptionDomain($"notificação nao implementada {nameof(T)}");
+            throw new ExceptionDomain($"notificação nao implementada {typeof(T).Name}");
 
         return (T)service;
     }

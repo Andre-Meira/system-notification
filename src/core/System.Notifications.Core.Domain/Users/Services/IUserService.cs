@@ -9,4 +9,6 @@ public interface IUserService
     public Task DeleteAsync(Guid userId, CancellationToken cancellation = default);
 
     public Task<UserNotificationsParameters?> FindByIdAsync(Guid userId, CancellationToken cancellation = default);
+
+    public Task<IEnumerable<UserNotificationsParameters>> GettAllUsers(CancellationToken cancellation = default);
 }

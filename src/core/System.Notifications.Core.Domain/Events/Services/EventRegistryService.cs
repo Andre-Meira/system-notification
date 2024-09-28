@@ -37,6 +37,8 @@ public class EventRegistryService(IEventsRepository eventsRepository) : IEventRe
         await eventsRepository.SaveChangeAsync(@event);
     }
 
+    public Task<IEnumerable<EventsRegistrys>> GetAllAsync(CancellationToken cancellationToken = default)
+        => eventsRepository.GetAllAsync(cancellationToken);
 
     public async Task UpdateAsync(Guid id, EventRegistrysModel eventRegistry,
         CancellationToken cancellationToken = default)

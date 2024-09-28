@@ -10,4 +10,6 @@ public interface IOutboundNotificationRepository
 
     public Task<OutboundNotifications?> GetByCodeAsync(string code,
         CancellationToken cancellation = default);
+
+    public Task<IEnumerable<OutboundNotifications>> GetAllAsync(CancellationToken cancellation = default);
 }

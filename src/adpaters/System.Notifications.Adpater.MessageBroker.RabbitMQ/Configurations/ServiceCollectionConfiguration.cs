@@ -8,8 +8,17 @@ using System.Notifications.Core.Domain.Events;
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Configurations;
 
 public static class ServiceCollectionConfiguration
-{
+{   
     public static IServiceCollection AddAdapterMessageBrokerRabbiMQ(this IServiceCollection services,
+        IAsyncConnectionFactory asyncConnection)
+    {
+        services.AddBus(asyncConnection);
+        services.AddScoped<IPublishEvent, EventDispatchs>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddAdapterConsumerMessageBrokerRabbiMQ(this IServiceCollection services, 
         IAsyncConnectionFactory asyncConnection)
     {
         services.AddBus(asyncConnection);

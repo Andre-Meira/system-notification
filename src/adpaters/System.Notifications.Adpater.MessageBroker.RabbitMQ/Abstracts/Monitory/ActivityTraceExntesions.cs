@@ -1,5 +1,4 @@
-﻿using OpenTelemetry.Trace;
-using RabbitMQ.Client.Events;
+﻿using RabbitMQ.Client.Events;
 using System.Diagnostics;
 using System.Text;
 
@@ -8,11 +7,6 @@ namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Monitory
 public static class ActivityTraceExntesions
 {
     private static readonly ActivitySource activitySource = new ActivitySource(ActivityConstants.Source, "1.0.0");
-   
-    public static TracerProviderBuilder AddTracingServiceBus(this TracerProviderBuilder tracerProvider)
-    {
-        return tracerProvider.AddSource(ActivityConstants.Source);
-    }
 
     public static ActivityBus? CreatePublishActivityBus<TMessage>(this TMessage message, 
         string exchange, 

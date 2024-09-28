@@ -2,11 +2,15 @@
 using System.Notifications.Adpater.DataBase.MongoDB.Contexts;
 using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
+using System.Runtime.InteropServices;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
 
 internal class EventsRepository(MongoContext mongoContext) : IEventsRepository
 {
+    public async Task<IEnumerable<EventsRegistrys>> GetAllAsync(CancellationToken cancellation = default)
+        => await mongoContext.EventsRegistrys.AsQueryable().ToListAsync(cancellation);
+
     public async Task<EventsRegistrys?> GetByCodeAsync(string code, CancellationToken cancellation = default)
         => await mongoContext.EventsRegistrys.Find(e => e.Code == code)
             .FirstOrDefaultAsync(cancellationToken: cancellation);

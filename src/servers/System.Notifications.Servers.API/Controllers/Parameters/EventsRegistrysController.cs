@@ -44,4 +44,11 @@ public class EventsRegistrysController(IEventRegistryService Service) : Controll
 
         return Ok(new { eventId, message = "evento desativado" });
     }
+
+
+    [HttpGet]
+    public async Task<IActionResult> GettAll(CancellationToken cancellationToken = default)
+    {
+        return Ok(await Service.GetAllAsync(cancellationToken));
+    }
 }

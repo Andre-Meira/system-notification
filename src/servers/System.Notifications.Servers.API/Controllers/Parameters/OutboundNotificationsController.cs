@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Notifications.Servers.API.Models.Parameters;
 using System.Notifications.Core.Domain.Notifications.Services;
 using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Users.Services;
 
 namespace System.Notifications.Servers.API.Controllers.Parameters;
 
@@ -40,5 +41,11 @@ public class OutboundNotificationsController(IOutboundNotificationService Servic
             .ConfigureAwait(false);
 
         return Ok(new { outboundId, message = "saida desativado" });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GettAll(CancellationToken cancellationToken = default)
+    {
+        return Ok(await Service.GetAllAsync(cancellationToken));
     }
 }

@@ -29,4 +29,9 @@ internal class UserNotificationRepository(MongoContext mongoContext) : IUserNoti
         var listAsync = await mongoContext.UserNotificationParameter.FindAsync(filter);
         return listAsync.ToList();
     }
+
+    public async Task<IEnumerable<UserNotificationsParameters>> GetAllUsers(CancellationToken cancellation = default)
+    {
+        return await mongoContext.UserNotificationParameter.AsQueryable().ToListAsync(cancellation);
+    }
 }

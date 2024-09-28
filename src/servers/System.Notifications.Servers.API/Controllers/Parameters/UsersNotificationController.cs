@@ -41,4 +41,16 @@ public class UsersNotificationController(IUserService userService) : ControllerB
 
         return Ok(new { userId, message = "usuario desativado" });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GettAll(CancellationToken cancellationToken = default)
+    {
+        return Ok(await userService.GettAllUsers(cancellationToken));
+    }
+
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> FindById(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return Ok(await userService.FindByIdAsync(userId, cancellationToken));
+    }
 }
