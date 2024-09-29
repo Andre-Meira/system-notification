@@ -9,7 +9,7 @@ namespace System.Notifications.Core.Domain.Tests.Events;
 
 public class BasicEventConsumerTests
 {
-    public IEventConsumerService EventConsumerSer { get; }
+    public INotificationService EventConsumerSer { get; }
 
     public BasicEventConsumerTests()
     {
@@ -20,7 +20,7 @@ public class BasicEventConsumerTests
 
         var publishNotification = new Mock<IPublishNotification>();
 
-        EventConsumerSer = new BasicEventConsumer
+        EventConsumerSer = new BaseNotificationService
             (
                 userNotificationRepositoryFixture.UserNotificationRepository,
                 notificationRepositoryFixture.NotificationRepository,

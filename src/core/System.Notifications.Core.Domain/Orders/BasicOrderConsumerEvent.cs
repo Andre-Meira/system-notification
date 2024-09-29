@@ -1,13 +1,14 @@
 ﻿using System.Notifications.Core.Domain.Events.Services;
 using System.Notifications.Core.Domain.Notifications;
+using System.Notifications.Core.Domain.Notifications.Services;
 
 namespace System.Notifications.Core.Domain.Orders;
 
 public sealed class BasicOrderConsumerEvent : IOrderEvent
 {
-    private readonly IEventConsumerService _eventConsumerService;
+    private readonly INotificationService _eventConsumerService;
 
-    public BasicOrderConsumerEvent(IEventConsumerService eventConsumerService)
+    public BasicOrderConsumerEvent(INotificationService eventConsumerService)
     {
         _eventConsumerService = eventConsumerService;
     }

@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Consumers;
 
-public class EventConsumer(EventDispatcherBase dispatcherBase) : IConsumerHandler<EventBase>
+internal sealed class EventConsumer(EventDispatcherBase dispatcherBase) : IConsumerHandler<EventBase>
 {
     public async Task Consumer(IConsumerContext<EventBase> context)
     {

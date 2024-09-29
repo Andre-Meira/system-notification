@@ -14,7 +14,7 @@ public class OutboundNotificationServiceTests
     public OutboundNotificationServiceTests()
     {
         repository = new OutboundNotificationRepositoryFixture().OutboundNotificationRepository;
-        service = new OutboundNotificationService(repository);
+        service = new BaseOutboundNotificationService(repository);
     }
 
     [Fact]

@@ -17,18 +17,32 @@ public class EmailNotificationService : IEmailNotification
         _userNotification = userNotification;
     }
 
-    public async Task PublishAsync(List<NotificationContext> notificationContexts, CancellationToken cancellationToken = default)
+    public async Task<NotificationContext[]> PublishAsync(NotificationContext[] notificationContexts,
+        CancellationToken cancellationToken = default)
     {
         foreach (var context in notificationContexts)
         {
-            UserNotificationsParameters? userNotificationsParameters = await _userNotification.GeyByIdAsync(context.UserNotificationsId);
+            try
+            {
+                UserNotificationsParameters? userNotificationsParameters = await _userNotification.GeyByIdAsync(context.UserNotificationsId);
 
-            if (userNotificationsParameters == null)
-                continue;
+                if (userNotificationsParameters == null)
+                    continue;
 
-            _logger.LogInformation($"Enviando mensagem no email do {userNotificationsParameters.EmailAddress}");
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            _logger.LogInformation($"Email enviado ao {userNotificationsParameters.EmailAddress}");
+                _logger.LogInformation($"Enviando mensagem no email do {userNotificationsParameters.EmailAddress}");
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                _logger.LogInformation($"Email enviado ao {userNotificationsParameters.EmailAddress}");
+
+                context.ConfirmDelivered();
+                context.ConfirmReceipt();
+            }
+            catch (Exception err)
+            {
+                context.AddError($"Fail send email error: {err.Message}");
+                throw;
+            }
         }
+
+        return notificationContexts;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JsonNet.ContractResolvers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -117,7 +118,10 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             var body = eventArgs.Body.ToArray();
             var messageString = Encoding.UTF8.GetString(body);
 
-            TMessage? message = JsonConvert.DeserializeObject<TMessage>(messageString);
+            TMessage? message = JsonConvert.DeserializeObject<TMessage>(messageString, new JsonSerializerSettings
+            {
+                ContractResolver = new PrivateSetterContractResolver()
+            });
 
             if (message is null)
             {

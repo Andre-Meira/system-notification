@@ -29,13 +29,13 @@ public static class Extensions
         });
 
         builder.Services.AddScoped<EventDispatcherBase, DefaultEventDispatcher>();
-        builder.Services.AddScoped<IEventConsumerService, BasicEventConsumer>();
-        builder.Services.AddScoped<IPublishNotification, PublishNotification>();
+        builder.Services.AddScoped<INotificationService, BaseNotificationService>();
+        builder.Services.AddScoped<IPublishNotification, BasePublishNotification>();
         builder.Services.AddScoped<INotificationChannelFactory, NotificationChannelFactory>();
 
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IEventRegistryService, EventRegistryService>();
-        builder.Services.AddScoped<IOutboundNotificationService, OutboundNotificationService>();
+        builder.Services.AddScoped<IOutboundNotificationService, BaseOutboundNotificationService>();
 
         builder.Services.AddScoped<IOrderEvent, BasicOrderConsumerEvent>();
 

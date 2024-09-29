@@ -5,7 +5,7 @@ namespace System.Notifications.Core.Domain.Notifications.Services;
 
 public interface INotificationChannelFactory
 {
-    INotificationChannel CreateChannel(OutboundNotificationsType channels);
+    IPublishNotificationChannel CreateChannel(OutboundNotificationsType channels);
 }
 
 public sealed class NotificationChannelFactory : INotificationChannelFactory
@@ -15,13 +15,13 @@ public sealed class NotificationChannelFactory : INotificationChannelFactory
     public NotificationChannelFactory(IServiceProvider serviceProvider)
         => _serviceProvider = serviceProvider;
 
-    public INotificationChannel CreateChannel(OutboundNotificationsType channel)
+    public IPublishNotificationChannel CreateChannel(OutboundNotificationsType channel)
     {
         return channel switch
         {
-            OutboundNotificationsType.Email => GetService<IEmailNotification>(),
-            OutboundNotificationsType.Sms => GetService<ISmsNotification>(),
-            OutboundNotificationsType.WebScokets => GetService<ISocketNotification>(),
+            OutboundNotificationsType.Email => GetService<IEmailPublishNotification>(),
+            OutboundNotificationsType.Sms => GetService<ISmsPublishNotification>(),
+            OutboundNotificationsType.WebScokets => GetService<ISocketPublishNotification>(),
             _ => throw new ExceptionDomain("Canal de notificação não suportado")
         };
     }

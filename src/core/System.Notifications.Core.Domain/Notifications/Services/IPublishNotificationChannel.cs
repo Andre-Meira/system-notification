@@ -1,6 +1,6 @@
 ﻿namespace System.Notifications.Core.Domain.Notifications.Services;
 
-public interface INotificationChannel
+public interface IPublishNotificationChannel
 {
     public Task PublishAsync(List<NotificationContext> notificationContexts,
         CancellationToken cancellationToken = default);

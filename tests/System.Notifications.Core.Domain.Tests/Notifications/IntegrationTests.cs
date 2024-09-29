@@ -9,11 +9,11 @@ public class IntegrationTests
     public IntegrationTests()
     {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddScoped<ISocketNotification, SocketNotificationTest>();
-        serviceCollection.AddScoped<ISmsNotification, SmsNotificationTest>();
+        serviceCollection.AddScoped<ISocketPublishNotification, SocketNotificationTest>();
+        serviceCollection.AddScoped<ISmsPublishNotification, SmsNotificationTest>();
         serviceCollection.AddScoped<INotificationChannelFactory, NotificationChannelFactory>();
 
-        serviceCollection.AddScoped<IPublishNotification, PublishNotification>();
+        serviceCollection.AddScoped<IPublishNotification, BasePublishNotification>();
 
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
@@ -27,7 +27,7 @@ public class IntegrationTests
 }
 
 
-internal class SocketNotificationTest : ISocketNotification
+internal class SocketNotificationTest : ISocketPublishNotification
 {
 
     public Task PublishAsync(
@@ -35,7 +35,7 @@ internal class SocketNotificationTest : ISocketNotification
         CancellationToken cancellationToken = default) => Task.CompletedTask;
 }
 
-internal class SmsNotificationTest : ISmsNotification
+internal class SmsNotificationTest : ISmsPublishNotification
 {
     public Task PublishAsync(
     List<NotificationContext> notificationContexts,

@@ -31,8 +31,8 @@ public record NotificationContext : Entity
 
     public NotificationMessage NotificationMessage { get; init; }
 
-    public bool IsDelivered { get; private set; } = false;
-    public bool IsConfirmed { get; private set; } = false;
+    public bool IsDelivered { get; private set; }
+    public bool IsConfirmed { get; private set; }
 
     public IReadOnlyCollection<string> Error => _error;
 
@@ -45,9 +45,14 @@ public record NotificationContext : Entity
         _error.AddRange(error);
     }
 
+    public void AddError(string error)
+    {
+        _error.Add(error);
+    }
+
     public void ConfirmDelivered()
     {
-        IsConfirmed = true;
+        IsDelivered = true;
         DeliveredAt = DateTime.UtcNow;
     }
 
