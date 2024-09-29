@@ -1,5 +1,4 @@
-﻿using System.Notifications.Core.Domain.Orders;
-using System.Notifications.Core.Domain.Users;
+﻿using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;

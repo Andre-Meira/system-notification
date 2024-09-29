@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JsonNet.ContractResolvers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts;
 
-public class ConsumerHandlerBase<TMessage, TConsumerHandler> : 
+public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
     BackgroundService, IDisposable
     where TMessage : class
     where TConsumerHandler : IConsumerHandler<TMessage>
@@ -25,7 +26,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
     private readonly ILogger<ConsumerHandlerBase<TMessage, TConsumerHandler>> _logger;
     private readonly IFaultConsumerConfiguration? _configDeadLetter;
     private readonly IConnection _connection;
-    
+
 
 
     private bool IsRetryMessage => _configDeadLetter is not null;
@@ -35,13 +36,13 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
         IServiceScopeFactory serviceScope,
         IConsumerOptions consumerOptions,
         ILogger<ConsumerHandlerBase<TMessage, TConsumerHandler>> logger)
-    {        
+    {
         if (consumerOptions.FaultConfig is not null) _configDeadLetter = consumerOptions.FaultConfig;
 
         _channel = connection.CreateModel();
         _consumerOptions = consumerOptions;
         _connection = connection;
-        
+
         _logger = logger;
         _serviceScope = serviceScope;
 
@@ -49,7 +50,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
     }
 
     private void Initilize()
-    {        
+    {
         if (IsRetryMessage)
         {
             _channel.ExchangeDeclare(ExchageNameRetry, "topic", true, false);
@@ -57,7 +58,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             _channel.QueueBind(ExchageNameRetry, ExchageNameRetry, "", null);
         }
 
-        if (_consumerOptions.PrefetchCount > 0) 
+        if (_consumerOptions.PrefetchCount > 0)
             _channel.BasicQos(0, _consumerOptions.PrefetchCount, false);
 
     }
@@ -77,7 +78,7 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             };
         });
 
-        _channel.BasicConsume(_consumerOptions.Exchange, false, consumerEvent);        
+        _channel.BasicConsume(_consumerOptions.Exchange, false, consumerEvent);
     }
 
     private async Task ReceivedMessageAsync(BasicDeliverEventArgs args)
@@ -95,17 +96,17 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             var context = new ConsumerContext<TMessage>(message, args.DeliveryTag, _channel);
             await consumerHandler.Consumer(context).ConfigureAwait(false);
         }
-        catch (Exception err) when (err is not ArgumentException)
+        catch (Exception err) when (err is not ArgumentNullException)
         {
             _logger.LogError("Consumer: {0}, error: {1}", consumerHandler.GetType().Name, err.Message);
             activityBus?.AddExceptionEvent(err);
-            
+
             await _channel.SendQueueFault(TransformMessage(args), err, _consumerOptions.Exchange);
             _channel.BasicNack(args.DeliveryTag, false, false);
         }
         finally
         {
-            service.Dispose();  
+            service.Dispose();
             activityBus?.Stop();
         }
     }
@@ -117,11 +118,14 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             var body = eventArgs.Body.ToArray();
             var messageString = Encoding.UTF8.GetString(body);
 
-            TMessage? message = JsonConvert.DeserializeObject<TMessage>(messageString);
+            TMessage? message = JsonConvert.DeserializeObject<TMessage>(messageString, new JsonSerializerSettings
+            {
+                ContractResolver = new PrivateSetterContractResolver()
+            });
 
             if (message is null)
             {
-                throw new ArgumentException("message is null");
+                throw new ArgumentNullException("message is null");
             }
 
             return message;
@@ -133,11 +137,11 @@ public class ConsumerHandlerBase<TMessage, TConsumerHandler> :
             throw;
         }
     }
-    
+
     public override void Dispose()
     {
         _channel.Dispose();
-        _connection.Dispose();        
+        _connection.Dispose();
     }
     #endregion
 }

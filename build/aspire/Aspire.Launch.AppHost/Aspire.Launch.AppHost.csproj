@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>5cf9b237-c4bb-4c1b-86c9-af4bda8446ae</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\servers\System.Notifications.Servers.API\System.Notifications.Servers.API.csproj" />
+    <ProjectReference Include="..\..\..\src\servers\System.Notifications.Servers.Woker\System.Notifications.Servers.Woker.csproj" />
+  </ItemGroup>
+
+</Project>

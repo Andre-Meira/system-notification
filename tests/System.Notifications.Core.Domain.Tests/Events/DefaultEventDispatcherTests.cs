@@ -7,7 +7,7 @@ public class DefaultEventDispatcherTests
 
     public DefaultEventDispatcherTests()
     {
-        _eventDispatcher = new DefaultEventDispatcher();        
+        _eventDispatcher = new DefaultEventDispatcher();
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class DefaultEventDispatcherTests
         {
             eventPublished = true;
             return Task.CompletedTask;
-        };        
+        };
 
         try
         {
@@ -83,6 +83,6 @@ public class DefaultEventDispatcherTests
             await _eventDispatcher.PublishEventAsync("order", @object);
         }
         catch (Exception) { }
-        finally { Assert.True(eventPublished); }       
+        finally { Assert.True(eventPublished); }
     }
 }

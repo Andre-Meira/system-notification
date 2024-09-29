@@ -3,7 +3,7 @@ using System.Notifications.Core.Domain.Events;
 
 namespace System.Notifications.Core.Domain.Notifications;
 
-public record NotificationContext : Entity 
+public record NotificationContext : Entity
 {
     private List<string> _error = new List<string>();
 
@@ -31,12 +31,12 @@ public record NotificationContext : Entity
 
     public NotificationMessage NotificationMessage { get; init; }
 
-    public bool IsDelivered { get; private set; } = false;
-    public bool IsConfirmed { get; private set; } = false;
+    public bool IsDelivered { get; private set; }
+    public bool IsConfirmed { get; private set; }
 
     public IReadOnlyCollection<string> Error => _error;
 
-    public DateTime CreatedAt {  get; init; }
+    public DateTime CreatedAt { get; init; }
     public DateTime? DeliveredAt { get; private set; }
     public DateTime? ConfirmedAt { get; private set; }
 
@@ -45,10 +45,15 @@ public record NotificationContext : Entity
         _error.AddRange(error);
     }
 
+    public void AddError(string error)
+    {
+        _error.Add(error);
+    }
+
     public void ConfirmDelivered()
     {
-        IsConfirmed = true;
-        ConfirmedAt = DateTime.UtcNow;
+        IsDelivered = true;
+        DeliveredAt = DateTime.UtcNow;
     }
 
     public void ConfirmReceipt()

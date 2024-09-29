@@ -5,7 +5,7 @@ namespace System.Notifications.Core.Domain.Events;
 
 public sealed class DefaultEventDispatcher : EventDispatcherBase
 {
-    private readonly ConcurrentDictionary<string, List<Delegate>> _handlers = new();
+    private static readonly ConcurrentDictionary<string, List<Delegate>> _handlers = new();
 
     public override void SubscribeAtEvent<T>(string eventCode, Func<T, Task> handler) where T : class
     {
@@ -15,7 +15,7 @@ public sealed class DefaultEventDispatcher : EventDispatcherBase
             _handlers[eventCode] = handlers;
         }
 
-        handlers.Add(handler);        
+        handlers.Add(handler);
     }
 
     public override async Task PublishEventAsync<T>(string eventCode, T @event) where T : class

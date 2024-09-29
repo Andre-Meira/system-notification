@@ -15,7 +15,7 @@ public static class ResolveServices
     public static IServiceCollection AddAdpaterMongoDb(this IServiceCollection services, MongoOptions mongoOptions)
     {
         MongoContextConfiguration.RegisterSerializer();
-        MongoContextConfiguration.RegisterClassMap();        
+        MongoContextConfiguration.RegisterClassMap();
         services.AddTransient<MongoContext>(e => new(mongoOptions));
 
         services.AddScoped<IEventsRepository, EventsRepository>();

@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using System.Linq.Expressions;
 using System.Notifications.Adpater.DataBase.MongoDB.Contexts;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
@@ -28,5 +27,10 @@ internal class UserNotificationRepository(MongoContext mongoContext) : IUserNoti
 
         var listAsync = await mongoContext.UserNotificationParameter.FindAsync(filter);
         return listAsync.ToList();
+    }
+
+    public async Task<IEnumerable<UserNotificationsParameters>> GetAllUsers(CancellationToken cancellation = default)
+    {
+        return await mongoContext.UserNotificationParameter.AsQueryable().ToListAsync(cancellation);
     }
 }

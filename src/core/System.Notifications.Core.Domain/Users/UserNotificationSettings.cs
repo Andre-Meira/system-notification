@@ -1,12 +1,9 @@
-﻿using System.Notifications.Core.Domain.Events;
-using System.Notifications.Core.Domain.Notifications;
-
-namespace System.Notifications.Core.Domain.Users;
+﻿namespace System.Notifications.Core.Domain.Users;
 
 public class UserNotificationSettings
-{ 
+{
     public UserNotificationSettings(
-        Guid eventId, 
+        Guid eventId,
         Guid outboundId,
         string eventCode,
         string outboundCode)

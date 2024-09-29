@@ -1,6 +1,6 @@
 ﻿using RabbitMQ.Client;
-using System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Monitory;
 using System.Diagnostics;
+using System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Monitory;
 
 namespace System.Notifications.Adpater.MessageBroker.RabbitMQ.Abstracts.Extesions;
 
@@ -17,7 +17,7 @@ internal static class PublishContextExtesions
         where TMessage : class
     {
         ActivityBus? activityBus = message.CreatePublishActivityBus(exchange, exchangeType, routingKey);
-        activityBus?.Start();        
+        activityBus?.Start();
 
         model.ConfirmSelect();
         try

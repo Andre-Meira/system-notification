@@ -6,7 +6,7 @@ public interface IConsumerContext<TMessage> where TMessage : class
 {
     TMessage Message { get; init; }
     public ulong DeliveryTag { get; init; }
-    public void NotifyConsumed();    
+    public void NotifyConsumed();
     public void NotifyFailConsumed(bool requeue = false);
 }
 

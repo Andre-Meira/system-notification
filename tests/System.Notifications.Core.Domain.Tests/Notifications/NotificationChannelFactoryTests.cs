@@ -1,11 +1,12 @@
 ﻿using Moq;
+using System.Notifications.Core.Domain.Abstracts.Exceptions;
 using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Notifications.Enums;
 using System.Notifications.Core.Domain.Notifications.Services;
 
 namespace System.Notifications.Core.Domain.Tests.Notifications;
 
-public class NotificationChannelFactoryTests :  IClassFixture<IntegrationTests>
+public class NotificationChannelFactoryTests : IClassFixture<IntegrationTests>
 {
     private readonly INotificationChannelFactory notificationChannelFactory;
 
@@ -25,7 +26,7 @@ public class NotificationChannelFactoryTests :  IClassFixture<IntegrationTests>
     [Fact]
     public void Cria_Canal_De_Notificacao_Nao_Implementado()
     {
-        Assert.Throws<ArgumentException>(() =>
+        Assert.Throws<ExceptionDomain>(() =>
         {
             notificationChannelFactory.CreateChannel(OutboundNotificationsType.Email);
         });

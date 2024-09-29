@@ -31,7 +31,7 @@ public class BusConfigurationTests : IClassFixture<IntegrationRabbitFixture>
 
         serviceDescriptors.AddConsumer<ConsumerSample, SampleOrder>(e =>
         {
-            e.Configure("consumer-sample" , ExchangeType.Topic, "*.order");
+            e.Configure("consumer-sample", ExchangeType.Topic, "*.order");
             e.ConfigureExchangeConsumer(ConstantsRoutings.exchange_order, ConstantsRoutings.exchange_type_order);
             e.Validate();
         });

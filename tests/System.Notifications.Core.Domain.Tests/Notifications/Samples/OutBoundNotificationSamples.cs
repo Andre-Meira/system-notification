@@ -23,7 +23,7 @@ public class OutBoundNotificationSamples
 
 
     public OutBoundNotificationSamples()
-    {         
+    {
         List.Add(Sms);
         List.Add(Email);
         List.Add(WebSocket);

@@ -1,15 +1,16 @@
-﻿using System.Notifications.Core.Domain.Notifications;
-
-namespace System.Notifications.Core.Domain.Events.Repositories;
+﻿namespace System.Notifications.Core.Domain.Events.Repositories;
 
 public interface IEventsRepository
 {
     public Task SaveChangeAsync(EventsRegistrys eventsRegistrys,
         CancellationToken cancellationToken = default);
 
-    public Task<EventsRegistrys?> GeyByIdAsync(Guid id,
+    public Task<EventsRegistrys?> GetByIdAsync(Guid id,
         CancellationToken cancellation = default);
 
-    public Task<EventsRegistrys?> GeyByCodeAsync(string code,
+    public Task<EventsRegistrys?> GetByCodeAsync(string code,
         CancellationToken cancellation = default);
+
+
+    public Task<IEnumerable<EventsRegistrys>> GetAllAsync(CancellationToken cancellation = default);
 }

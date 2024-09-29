@@ -15,10 +15,10 @@ public record OutboundNotifications : Entity
     }
 
     public string Code { get; init; }
-    public string Name { get; init; }
-    public string Description { get; init; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
 
-    public bool IsEnabled { get; init; }
+    public bool IsEnabled { get; private set; }
 
     public static explicit operator OutboundNotificationsType(OutboundNotifications outbound)
     {
@@ -27,7 +27,15 @@ public record OutboundNotifications : Entity
             "SMS" => OutboundNotificationsType.Sms,
             "Email" => OutboundNotificationsType.Email,
             "WebSocket" => OutboundNotificationsType.WebScokets,
-            _ => throw new NotImplementedException(outbound.Code)    
+            _ => throw new NotImplementedException(outbound.Code)
         };
+    }
+
+    public void Disable() => IsEnabled = false;
+
+    public void Update(string name, string description)
+    {
+        Name = name;
+        Description = description;
     }
 }

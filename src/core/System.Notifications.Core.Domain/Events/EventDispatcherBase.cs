@@ -26,7 +26,7 @@ public abstract class EventDispatcherBase
 
     protected Task DispatcherCompleted(string eventCode, object @event)
     {
-        if (EventDispatcherCompleted is null) 
+        if (EventDispatcherCompleted is null)
             return Task.CompletedTask;
 
         return EventDispatcherCompleted.Invoke(eventCode, @event);

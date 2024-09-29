@@ -1,13 +1,12 @@
-﻿using System.Notifications.Core.Domain.Events.Repositories;
-using System.Notifications.Core.Domain.Notifications;
+﻿using System.Notifications.Core.Domain.Events;
+using System.Notifications.Core.Domain.Events.Repositories;
 using System.Notifications.Core.Domain.Notifications.Repositories;
-using System.Notifications.Core.Domain.Notifications.Services;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 
-namespace System.Notifications.Core.Domain.Events.Services;
+namespace System.Notifications.Core.Domain.Notifications.Services;
 
-public sealed class BasicEventConsumer : IEventConsumerService
+public sealed class BaseNotificationService : INotificationService
 {
     private readonly IUserNotificationRepository _userNotificationRepository;
     private readonly INotificationRepository _notificationRepository;
@@ -15,7 +14,7 @@ public sealed class BasicEventConsumer : IEventConsumerService
     private readonly IOutboundNotificationRepository _outboundNotificationRepository;
     private readonly IEventsRepository _eventsRepository;
 
-    public BasicEventConsumer(IUserNotificationRepository userNotificationRepository,
+    public BaseNotificationService(IUserNotificationRepository userNotificationRepository,
         INotificationRepository notificationRepository,
         IPublishNotification publishNotification,
         IOutboundNotificationRepository outboundNotificationRepository,
@@ -28,8 +27,8 @@ public sealed class BasicEventConsumer : IEventConsumerService
         _eventsRepository = eventsRepository;
     }
 
-    public async Task<IEnumerable<NotificationContext>> PublishEventAsync(
-        NotificationMessage notificationMessage, 
+    public async Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
+        NotificationMessage notificationMessage,
         CancellationToken cancellationToken = default)
     {
         var notificationContextList = new List<NotificationContext>();
@@ -43,8 +42,8 @@ public sealed class BasicEventConsumer : IEventConsumerService
             {
                 var errorList = new List<string>();
 
-                EventsRegistrys? eventRegistry = await _eventsRepository.GeyByIdAsync(userSettings.EventId);
-                OutboundNotifications? outBound = await _outboundNotificationRepository.GeyByIdAsync(userSettings.OutboundNotificationId);
+                EventsRegistrys? eventRegistry = await _eventsRepository.GetByIdAsync(userSettings.EventId);
+                OutboundNotifications? outBound = await _outboundNotificationRepository.GetByIdAsync(userSettings.OutboundNotificationId);
 
                 if (eventRegistry == null)
                     errorList.Add("event registry not implementation");
@@ -69,5 +68,11 @@ public sealed class BasicEventConsumer : IEventConsumerService
         await _publishNotification.PublishAsync(notificationPublishs, cancellationToken);
 
         return notificationContextList;
+    }
+
+    public async Task SaveNotificationsAsync(NotificationContext[] notifications)
+    {
+        foreach (var notification in notifications)
+            await _notificationRepository.SaveChangeAsync(notification);
     }
 }

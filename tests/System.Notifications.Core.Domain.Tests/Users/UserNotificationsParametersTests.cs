@@ -5,21 +5,21 @@ using System.Notifications.Core.Domain.Users;
 namespace System.Notifications.Core.Domain.Tests.Users;
 
 public class UserNotificationsParametersTests
-{   
-   public void Desativa_Usuario() 
-   {
+{
+    public void Desativa_Usuario()
+    {
         Guid guid = Guid.NewGuid();
         var userNotifications = new UserNotificationsParameters(guid, "teste@hotmail.com", "00000000000");
         userNotifications.Disable();
 
         Assert.True(
-            userNotifications.IsEnabled == false && 
+            userNotifications.IsEnabled == false &&
             string.IsNullOrEmpty(userNotifications.EmailAddress) &&
             string.IsNullOrEmpty(userNotifications.Contact)
             );
-   }
+    }
 
-    
+
     public void Atualiza_Usuario()
     {
         Guid guid = Guid.NewGuid();

@@ -19,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adpaters", "adpaters", "{AB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.OutBound.Email", "src\adpaters\System.Notifications.Adpater.OutBound.Email\System.Notifications.Adpater.OutBound.Email.csproj", "{00E873AA-5AF6-4D08-AD3D-E7EFB56802A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.OutBound.Sockets", "src\adpaters\System.Notifications.Adpater.OutBound.Sockets\System.Notifications.Adpater.OutBound.Sockets.csproj", "{098C14CA-67BF-4A4B-8477-16321936D73B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.MessageBroker.RabbitMQ", "src\adpaters\System.Notifications.Adpater.MessageBroker.RabbitMQ\System.Notifications.Adpater.MessageBroker.RabbitMQ.csproj", "{2394A781-CFFA-4359-A7D4-155FE9CD03F7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.DataBase.MongoDB", "src\adpaters\System.Notifications.Adpater.DataBase.MongoDB\System.Notifications.Adpater.DataBase.MongoDB.csproj", "{A45BEA49-4A52-4168-8122-624ACCF872D9}"
@@ -36,7 +34,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{FDD206
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.DataBase.MongoDB.Tests", "tests\System.Notifications.Adpater.DataBase.MongoDB.Tests\System.Notifications.Adpater.DataBase.MongoDB.Tests.csproj", "{31242FBB-56BE-4A54-A66F-3E85C39716E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests", "tests\System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests\System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests.csproj", "{BD73BA91-C178-4B84-8B7D-53BF4906E5D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests", "tests\System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests\System.Notifications.Adpater.MessageBroker.RabbitMQ.Tests.csproj", "{BD73BA91-C178-4B84-8B7D-53BF4906E5D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Servers.API", "src\servers\System.Notifications.Servers.API\System.Notifications.Servers.API.csproj", "{8EAE6681-C219-477A-9A17-EEA9304DAB46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Notifications.Core.ServiceDefaults", "src\core\System.Notifications.Core.ServiceDefaults\System.Notifications.Core.ServiceDefaults.csproj", "{6498086D-FF63-41EE-AA75-2F0E4BD04D84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{D393B601-FC06-40E0-9489-3A1753A5338E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.Launch.AppHost", "build\aspire\Aspire.Launch.AppHost\Aspire.Launch.AppHost.csproj", "{1C269866-A2B0-4E28-BB19-3198EEF23B55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Notifications.Servers.Woker", "src\servers\System.Notifications.Servers.Woker\System.Notifications.Servers.Woker.csproj", "{616AA48A-36FC-4B7B-BACC-330521DB732F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Notifications.Adpater.OutBound.Sockets", "src\adpaters\System.Notifications.Adpater.OutBound.Sockets\System.Notifications.Adpater.OutBound.Sockets.csproj", "{9DD5C5A2-13C9-4301-BB70-27845316EDBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +70,6 @@ Global
 		{00E873AA-5AF6-4D08-AD3D-E7EFB56802A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00E873AA-5AF6-4D08-AD3D-E7EFB56802A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00E873AA-5AF6-4D08-AD3D-E7EFB56802A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{098C14CA-67BF-4A4B-8477-16321936D73B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{098C14CA-67BF-4A4B-8477-16321936D73B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{098C14CA-67BF-4A4B-8477-16321936D73B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{098C14CA-67BF-4A4B-8477-16321936D73B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2394A781-CFFA-4359-A7D4-155FE9CD03F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2394A781-CFFA-4359-A7D4-155FE9CD03F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2394A781-CFFA-4359-A7D4-155FE9CD03F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,6 +86,26 @@ Global
 		{BD73BA91-C178-4B84-8B7D-53BF4906E5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD73BA91-C178-4B84-8B7D-53BF4906E5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD73BA91-C178-4B84-8B7D-53BF4906E5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAE6681-C219-477A-9A17-EEA9304DAB46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAE6681-C219-477A-9A17-EEA9304DAB46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAE6681-C219-477A-9A17-EEA9304DAB46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAE6681-C219-477A-9A17-EEA9304DAB46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6498086D-FF63-41EE-AA75-2F0E4BD04D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6498086D-FF63-41EE-AA75-2F0E4BD04D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6498086D-FF63-41EE-AA75-2F0E4BD04D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6498086D-FF63-41EE-AA75-2F0E4BD04D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C269866-A2B0-4E28-BB19-3198EEF23B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C269866-A2B0-4E28-BB19-3198EEF23B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C269866-A2B0-4E28-BB19-3198EEF23B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C269866-A2B0-4E28-BB19-3198EEF23B55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{616AA48A-36FC-4B7B-BACC-330521DB732F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616AA48A-36FC-4B7B-BACC-330521DB732F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616AA48A-36FC-4B7B-BACC-330521DB732F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616AA48A-36FC-4B7B-BACC-330521DB732F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DD5C5A2-13C9-4301-BB70-27845316EDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DD5C5A2-13C9-4301-BB70-27845316EDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DD5C5A2-13C9-4301-BB70-27845316EDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DD5C5A2-13C9-4301-BB70-27845316EDBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,13 +117,18 @@ Global
 		{1E2D6F2D-A448-43F4-9221-AE7969155E61} = {BAD96F65-E008-489C-B74F-74011A9807E8}
 		{AB270809-B1B4-4EE3-8721-8140BF2BCAF7} = {F8BA05D7-0DA8-4532-8BF3-261D06565EF8}
 		{00E873AA-5AF6-4D08-AD3D-E7EFB56802A7} = {AB270809-B1B4-4EE3-8721-8140BF2BCAF7}
-		{098C14CA-67BF-4A4B-8477-16321936D73B} = {AB270809-B1B4-4EE3-8721-8140BF2BCAF7}
 		{2394A781-CFFA-4359-A7D4-155FE9CD03F7} = {AB270809-B1B4-4EE3-8721-8140BF2BCAF7}
 		{A45BEA49-4A52-4168-8122-624ACCF872D9} = {AB270809-B1B4-4EE3-8721-8140BF2BCAF7}
 		{31A5C58B-216A-43C5-B247-5D2E5BE8ACEF} = {F8BA05D7-0DA8-4532-8BF3-261D06565EF8}
 		{FDD206CA-25C3-4C40-944F-C418F5B9AC82} = {FE72BAA7-16A6-4848-8ADF-656FA6B831FF}
 		{31242FBB-56BE-4A54-A66F-3E85C39716E5} = {BAD96F65-E008-489C-B74F-74011A9807E8}
 		{BD73BA91-C178-4B84-8B7D-53BF4906E5D2} = {BAD96F65-E008-489C-B74F-74011A9807E8}
+		{8EAE6681-C219-477A-9A17-EEA9304DAB46} = {31A5C58B-216A-43C5-B247-5D2E5BE8ACEF}
+		{6498086D-FF63-41EE-AA75-2F0E4BD04D84} = {7F5E330E-399D-4866-BC82-E528DF413EDC}
+		{D393B601-FC06-40E0-9489-3A1753A5338E} = {FE72BAA7-16A6-4848-8ADF-656FA6B831FF}
+		{1C269866-A2B0-4E28-BB19-3198EEF23B55} = {D393B601-FC06-40E0-9489-3A1753A5338E}
+		{616AA48A-36FC-4B7B-BACC-330521DB732F} = {31A5C58B-216A-43C5-B247-5D2E5BE8ACEF}
+		{9DD5C5A2-13C9-4301-BB70-27845316EDBE} = {AB270809-B1B4-4EE3-8721-8140BF2BCAF7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A77911BE-3C75-4FE1-98AA-CA2AE2BCDDA5}

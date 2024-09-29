@@ -19,5 +19,5 @@ public record NotificationMessage
 
     public string EventCode { get; init; }
 
-    public object? Event {  get; init; }
+    public object? Event { get; init; }
 }

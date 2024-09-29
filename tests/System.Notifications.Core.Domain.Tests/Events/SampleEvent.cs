@@ -8,7 +8,7 @@ public record SampleEvent
     {
         public SampleOrder(string name)
         {
-            Name = name;   
+            Name = name;
         }
 
         [JsonRequired]
@@ -25,7 +25,7 @@ public record SampleEvent
         }
 
         [JsonRequired]
-        [JsonPropertyName("value_int")]        
-        public int Value { get; set; }  
+        [JsonPropertyName("value_int")]
+        public int Value { get; set; }
     }
 }

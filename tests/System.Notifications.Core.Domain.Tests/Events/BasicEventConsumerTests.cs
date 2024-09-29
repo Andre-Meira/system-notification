@@ -9,7 +9,7 @@ namespace System.Notifications.Core.Domain.Tests.Events;
 
 public class BasicEventConsumerTests
 {
-    public IEventConsumerService EventConsumerSer { get; }
+    public INotificationService EventConsumerSer { get; }
 
     public BasicEventConsumerTests()
     {
@@ -18,9 +18,9 @@ public class BasicEventConsumerTests
         var outboundNotificationRepositoryFixture = new OutboundNotificationRepositoryFixture();
         var userNotificationRepositoryFixture = new UserNotificationRepositoryFixture();
 
-        var publishNotification = new Mock<IPublishNotification>();        
+        var publishNotification = new Mock<IPublishNotification>();
 
-        EventConsumerSer = new BasicEventConsumer
+        EventConsumerSer = new BaseNotificationService
             (
                 userNotificationRepositoryFixture.UserNotificationRepository,
                 notificationRepositoryFixture.NotificationRepository,
@@ -38,7 +38,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishEventAsync(@event);
+        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
 
         var notificationError = notifications.Where(e => e.Error.Any());
         Assert.Empty(notificationError);
@@ -52,7 +52,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishEventAsync(@event);
+        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
         Assert.Empty(notifications);
     }
 }
