@@ -1,5 +1,6 @@
 ﻿using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
+using System.Notifications.Core.Domain.Notifications.Enums;
 using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
@@ -25,6 +26,18 @@ public sealed class BaseNotificationService : INotificationService
         _publishNotification = publishNotification;
         _outboundNotificationRepository = outboundNotificationRepository;
         _eventsRepository = eventsRepository;
+    }
+
+    public async Task ConfirmReceiptNotifications(Guid[] ids)
+    {
+        foreach (var id in ids)
+        {
+            var context = await _notificationRepository.GetByIdAsync(id);
+            if (context == null) continue;
+
+            context.ConfirmReceipt();
+            await _notificationRepository.SaveChangeAsync(context);
+        }
     }
 
     public async Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
@@ -68,6 +81,13 @@ public sealed class BaseNotificationService : INotificationService
         await _publishNotification.PublishAsync(notificationPublishs, cancellationToken);
 
         return notificationContextList;
+    }
+
+    public async Task RepublishPendingNotificationsAsync(Guid userId, OutboundNotificationsType notificationsType,
+        CancellationToken cancellation = default)
+    {
+        var notifications = await _notificationRepository.GetPendingNotifications(userId, notificationsType);
+        await _publishNotification.PublishAsync(notifications.ToList(), cancellation);
     }
 
     public async Task SaveNotificationsAsync(NotificationContext[] notifications)

@@ -11,6 +11,5 @@ public interface IEventsRepository
     public Task<EventsRegistrys?> GetByCodeAsync(string code,
         CancellationToken cancellation = default);
 
-
     public Task<IEnumerable<EventsRegistrys>> GetAllAsync(CancellationToken cancellation = default);
 }

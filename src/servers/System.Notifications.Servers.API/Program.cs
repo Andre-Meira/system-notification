@@ -1,5 +1,6 @@
 using System.Notifications.Core.ServiceDefaults;
 using System.Notifications.Servers.API.Configuration;
+using System.Notifications.Servers.API.Hubs;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,9 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration);
+builder.Services.AddMemoryCache();
+
+builder.Services.AddAuthorization();
 
 builder.AddServiceDefaults();
 
@@ -21,10 +25,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationsHub>("/notifications", confg =>
+{
+    confg.CloseOnAuthenticationExpiration = true;
+})
+    .RequireAuthorization();
 
 app.Run();

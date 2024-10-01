@@ -18,6 +18,7 @@ public static class ServiceCollectionConfiguration
         services.AddBus(asyncConnection);
         services.AddScoped<IPublishEvent, EventDispatchs>();
         services.AddScoped<IEmailPublishNotification, EmailPublishNotification>();
+        services.AddScoped<ISocketPublishNotification, SocketPublishNotification>();
 
         return services;
     }
@@ -41,10 +42,31 @@ public static class ServiceCollectionConfiguration
             e.Validate();
         });
 
+        services.AddConsumer<WebSocketConsumer, NotificationContext[]>(e =>
+        {
+            e.ConfigureExchangeConsumer(ConstantsRoutings.ExchangePublishNotifications, ExchangeType.Topic);
+            e.Configure(ConstantsRoutings.ExchageSocketConsumer, ExchangeType.Topic, "socket");
+            e.Validate();
+        });
+
         services.AddConsumer<SaveNotificationsConsumer, NotificationContext[]>(e =>
         {
             e.ConfigureExchangeConsumer(ConstantsRoutings.ExchangeSaveNotifications, ExchangeType.Direct);
             e.Configure(ConstantsRoutings.ExchangeSaveNotificationsConsumer, ExchangeType.Direct);
+            e.Validate();
+        });
+
+        services.AddConsumer<ConfirmDeliveryNotificationConsumer, NotificationContext>(e =>
+        {
+            e.ConfigureExchangeConsumer(ConstantsRoutings.ExchangeDeliveryNotifications, ExchangeType.Topic);
+            e.Configure(ConstantsRoutings.ExchangeDeliveryNotificationsConsumer, ExchangeType.Topic);
+            e.Validate();
+        });
+
+        services.AddConsumer<ConfirmAckNotificationConsumer, Guid[]>(e =>
+        {
+            e.ConfigureExchangeConsumer(ConstantsRoutings.ExchangeAckNotifications, ExchangeType.Topic);
+            e.Configure(ConstantsRoutings.ExchangeAckNotificationsConsumer, ExchangeType.Topic);
             e.Validate();
         });
 

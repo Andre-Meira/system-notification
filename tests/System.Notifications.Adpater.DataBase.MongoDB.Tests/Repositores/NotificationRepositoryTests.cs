@@ -31,7 +31,7 @@ public class NotificationRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Cria_Uma_Nova_Notificacao_Com_Sucesso()
     {
         await _notificationRepository.SaveChangeAsync(Context);
-        var registry = await _notificationRepository.GeyByIdAsync(Context.Id);
+        var registry = await _notificationRepository.GetByIdAsync(Context.Id);
 
         Assert.NotNull(registry);
     }
@@ -39,7 +39,7 @@ public class NotificationRepositoryTests : IClassFixture<MongoDbFixture>
     [Fact]
     public async Task Procura_Uma_Notificao_Inexistente_Retorna_Null()
     {
-        var registry = await _notificationRepository.GeyByIdAsync(Guid.NewGuid());
+        var registry = await _notificationRepository.GetByIdAsync(Guid.NewGuid());
         Assert.Null(registry);
     }
 }
