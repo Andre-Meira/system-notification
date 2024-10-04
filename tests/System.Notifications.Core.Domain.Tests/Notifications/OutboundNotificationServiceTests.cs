@@ -89,4 +89,12 @@ public class OutboundNotificationServiceTests
             return service.DeleteAsync(Guid.NewGuid());
         });
     }
+
+
+    [Fact]
+    public async Task Obtem_uma_Lista_De_Notificacao_Retona_List()
+    {
+        var outbound = await service.GetAllAsync();
+        Assert.NotEmpty(outbound);
+    }
 }

@@ -6,6 +6,7 @@ namespace System.Notifications.Core.Domain.Tests.Users;
 
 public class UserNotificationsParametersTests
 {
+    [Fact]
     public void Desativa_Usuario()
     {
         Guid guid = Guid.NewGuid();
@@ -19,7 +20,7 @@ public class UserNotificationsParametersTests
             );
     }
 
-
+    [Fact]
     public void Atualiza_Usuario()
     {
         Guid guid = Guid.NewGuid();
@@ -35,7 +36,7 @@ public class UserNotificationsParametersTests
             );
     }
 
-
+    [Fact]
     public void Criar_Usuario_Com_As_Configuracoes_De_Notificacoes()
     {
         var outbound = new OutboundNotifications(Guid.Parse("96627868-708F-4B88-8CDD-8451B287AAB9"), "SMS", "SMS Service", "");

@@ -11,6 +11,6 @@ public interface INotificationRepository
         CancellationToken cancellation = default);
 
     public Task<NotificationContext[]> GetPendingNotifications(Guid userId,
-        OutboundNotificationsType notificationsType,
+        Guid outboundId,
         CancellationToken cancellation = default);
 }

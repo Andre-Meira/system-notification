@@ -36,12 +36,12 @@ public sealed class UserService : IUserService
             EventsRegistrys? @event = await _eventsRepository.GetByIdAsync(userNotificationSettings.EventId);
 
             if (@event is null)
-                throw new ArgumentNullException(nameof(@event));
+                throw new ExceptionDomain(nameof(@event));
 
             OutboundNotifications? outbound = await _outboundNotificationRepository.GetByIdAsync(userNotificationSettings.OutboundId);
 
             if (outbound is null)
-                throw new ArgumentNullException(nameof(outbound));
+                throw new ExceptionDomain(nameof(outbound));
 
             settingsArray[index] = new UserNotificationSettings(@event.Id, outbound.Id, @event.Code, outbound.Code);
         }
@@ -69,12 +69,12 @@ public sealed class UserService : IUserService
             EventsRegistrys? @event = await _eventsRepository.GetByIdAsync(userNotificationSettings.EventId);
 
             if (@event is null)
-                throw new ArgumentNullException(nameof(@event));
+                throw new ExceptionDomain(nameof(@event));
 
             OutboundNotifications? outbound = await _outboundNotificationRepository.GetByIdAsync(userNotificationSettings.OutboundId);
 
             if (outbound is null)
-                throw new ArgumentNullException(nameof(outbound));
+                throw new ExceptionDomain(nameof(outbound));
 
             settingsArray[index] = new UserNotificationSettings(@event.Id, outbound.Id, @event.Code, outbound.Code);
         }

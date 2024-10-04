@@ -83,10 +83,10 @@ public sealed class BaseNotificationService : INotificationService
         return notificationContextList;
     }
 
-    public async Task RepublishPendingNotificationsAsync(Guid userId, OutboundNotificationsType notificationsType,
+    public async Task RepublishPendingNotificationsAsync(Guid userId, Guid outboundId,
         CancellationToken cancellation = default)
     {
-        var notifications = await _notificationRepository.GetPendingNotifications(userId, notificationsType);
+        var notifications = await _notificationRepository.GetPendingNotifications(userId, outboundId);
         await _publishNotification.PublishAsync(notifications.ToList(), cancellation);
     }
 

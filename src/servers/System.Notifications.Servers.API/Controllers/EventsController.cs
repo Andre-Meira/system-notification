@@ -5,7 +5,7 @@ using System.Notifications.Core.Domain.Orders;
 namespace System.Notifications.Servers.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class EventsController(IPublishEvent publish) : ControllerBase
 {
     [HttpPost("notificar-ordem-processada")]

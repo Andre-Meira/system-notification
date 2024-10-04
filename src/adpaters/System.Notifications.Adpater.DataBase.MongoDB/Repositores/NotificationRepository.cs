@@ -8,14 +8,14 @@ namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
 
 internal class NotificationRepository(MongoContext mongoContext) : INotificationRepository
 {
-    public async Task<NotificationContext[]> GetPendingNotifications(Guid userId, 
-        OutboundNotificationsType notificationsType, CancellationToken cancellation = default)
+    public async Task<NotificationContext[]> GetPendingNotifications(Guid userId, Guid outboundId, CancellationToken cancellation = default)
     {
         var notifications = await mongoContext.NotificationContext
             .Find(e => e.OutboundNotifications != null &&
                        e.UserNotificationsId == userId &&
-                       e.OutboundNotifications.Code == notificationsType.ToString() && 
-                       e.CreatedAt < DateTime.Now.AddHours(-1))
+                       e.OutboundNotifications.Id == outboundId &&
+                       e.IsDelivered == false
+                       )
             .ToListAsync(cancellationToken: cancellation);
 
         return notifications.ToArray();

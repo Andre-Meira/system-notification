@@ -32,6 +32,14 @@ public class EventsRepositoryFixture
         });
 
         eventsRepository.Setup(e =>
+            e.GetAllAsync(It.IsAny<CancellationToken>())
+         )
+        .Returns((CancellationToken _) =>
+        {
+            return Task.FromResult(listEvents.AsEnumerable());
+        });
+
+        eventsRepository.Setup(e =>
             e.SaveChangeAsync(It.IsAny<EventsRegistrys>(), It.IsAny<CancellationToken>())
          )
         .Callback((EventsRegistrys @event, CancellationToken _) =>
