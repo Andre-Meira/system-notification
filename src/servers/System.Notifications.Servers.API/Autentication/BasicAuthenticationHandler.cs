@@ -45,17 +45,17 @@ public record BasicAuthorization
     public BasicAuthorization(string? authorizationHeader)
     {
         if (string.IsNullOrEmpty(authorizationHeader))
-            throw new ArgumentException("Sem autenticacao..");
+            throw new AuthenticationFailureException("Sem autenticacao..");
 
         if (!IsBasicAuthorization(authorizationHeader))
-            throw new ArgumentException("Autenticacao não é valdia.");
+            throw new AuthenticationFailureException("Autenticacao não é valdia.");
 
         var credentials = DecodeBasicCredentials(authorizationHeader);
         var parts = credentials.Split(':');
 
         if (parts.Length != 2)
         {
-            throw new ArgumentException("Credenciais inválidas no cabeçalho de autorização Basic");
+            throw new AuthenticationFailureException("Credenciais inválidas no cabeçalho de autorização Basic");
         }
 
         Name = parts[0];

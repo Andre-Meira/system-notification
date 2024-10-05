@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using System.Notifications.Adpater.MessageBroker.RabbitMQ;
@@ -8,7 +9,7 @@ using System.Security.Claims;
 
 namespace System.Notifications.Servers.API.Hubs;
 
-[Authorize]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache memoryCache, IPublishContext publishContext) : Hub
 {
     public string? UserName => Context.User?.FindFirst(ClaimTypes.Name)?.Value;
@@ -21,11 +22,7 @@ public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache mem
                 Context.Abort();
 
         logger.LogInformation($"Usuario {UserId} logado!!");
-        
-        memoryCache.GetOrCreate<string>(UserId, options =>
-        {
-            return Context.ConnectionId;
-        });
+        memoryCache.Set(UserId, Context.ConnectionId);
 
         return Task.CompletedTask;
     }
@@ -43,12 +40,13 @@ public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache mem
         if (connetecId == null)
             return;
 
-        await Clients.Client(connetecId).SendAsync("ReceiveNotification", context.NotificationMessage.Message, context.Id);
+        await Clients.Client(connetecId).SendAsync("ReceiveNotification", context);
         await publishContext.PublishTopicMessage(context, ConstantsRoutings.ExchangeDeliveryNotifications);
     }
 
-    public async Task AckNotifications(Guid[] guids)
+    public async Task AckNotifications(string[] guids)
     {
-        await publishContext.PublishTopicMessage(guids, ConstantsRoutings.ExchangeAckNotifications);
+        var guidId = guids.Select(Guid.Parse);
+        await publishContext.PublishTopicMessage(guidId.ToArray(), ConstantsRoutings.ExchangeAckNotifications);
     }
 }

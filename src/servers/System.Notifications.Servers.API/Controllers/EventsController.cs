@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Orders;
+using System.Notifications.Servers.API.Autentication;
 
 namespace System.Notifications.Servers.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[ApiExplorerSettings(GroupName = "Events")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class EventsController(IPublishEvent publish) : ControllerBase
 {
     [HttpPost("notificar-ordem-processada")]

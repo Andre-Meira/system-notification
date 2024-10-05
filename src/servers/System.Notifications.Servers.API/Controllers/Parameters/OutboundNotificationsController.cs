@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Notifications.Core.Domain.Notifications;
 using System.Notifications.Core.Domain.Notifications.Services;
@@ -8,6 +10,8 @@ namespace System.Notifications.Servers.API.Controllers.Parameters;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiExplorerSettings(GroupName = "Parameters")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class OutboundNotificationsController(IOutboundNotificationService Service) : ControllerBase
 {
     [HttpPost("create-outbound")]
