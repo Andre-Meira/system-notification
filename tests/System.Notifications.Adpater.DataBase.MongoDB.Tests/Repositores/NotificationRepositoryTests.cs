@@ -12,10 +12,13 @@ public class NotificationRepositoryTests : IClassFixture<MongoDbFixture>
             Guid.Parse("8257095D-9052-40EF-900E-85F91AD88176"),
             UserNotificationRepositoryTests.UserNotification.Id,
             new NotificationMessage(
-                nameof(SampleEvent.SampleOrder),
+                "Ordem publicada",
                 "order publicada com sucesso",
                 "ordem 123 criada",
-                new SampleEvent.SampleOrder("teste")
+                new Dictionary<string, string>
+                {
+                    { "OrdeID", Guid.NewGuid().ToString() } 
+                }
             ),
             EventsRepositoryTests.EventsRegistrys,
             OutboundNotificationRepositoryTests.OutboundNotifications
@@ -57,7 +60,10 @@ public class NotificationRepositoryTests : IClassFixture<MongoDbFixture>
                 nameof(SampleEvent.SampleOrder),
                 "order publicada com sucesso",
                 "ordem 123 criada",
-                new SampleEvent.SampleOrder("teste")
+                new Dictionary<string, string>
+                {
+                    { "OrdeID", Guid.NewGuid().ToString() }
+                }
             ),
             EventsRepositoryTests.EventsRegistrys,
             OutboundNotificationRepositoryTests.OutboundNotifications

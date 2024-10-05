@@ -7,10 +7,8 @@ using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Services;
 using System.Notifications.Core.Domain.Notifications.Services;
-using System.Notifications.Core.Domain.Orders;
 using System.Notifications.Core.Domain.Users.Services;
 
 namespace System.Notifications.Core.ServiceDefaults;
@@ -27,19 +25,12 @@ public static class Extensions
             http.AddStandardResilienceHandler();
             http.AddServiceDiscovery();
         });
-
-        builder.Services.AddScoped<EventDispatcherBase, DefaultEventDispatcher>();
+        
         builder.Services.AddScoped<INotificationService, BaseNotificationService>();
-        builder.Services.AddScoped<IPublishNotification, BasePublishNotification>();
-        builder.Services.AddScoped<INotificationChannelFactory, NotificationChannelFactory>();
 
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IEventRegistryService, EventRegistryService>();
         builder.Services.AddScoped<IOutboundNotificationService, BaseOutboundNotificationService>();
-
-        builder.Services.AddScoped<IOrderEvent, BasicOrderConsumerEvent>();
-
-        builder.Services.AddEvents();
 
         return builder;
     }

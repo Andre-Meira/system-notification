@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\core\System.Notifications.Core.Domain\System.Notifications.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Publishers\" />
+  </ItemGroup>
+
 </Project>

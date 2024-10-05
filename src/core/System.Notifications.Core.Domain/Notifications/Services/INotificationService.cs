@@ -6,6 +6,7 @@ namespace System.Notifications.Core.Domain.Notifications.Services;
 public interface INotificationService
 {
     Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
+        string eventCode,
         NotificationMessage notificationMessage,
         CancellationToken cancellationToken = default);
 

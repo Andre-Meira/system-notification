@@ -1,25 +1,18 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Notifications.Core.Domain.Events;
-using System.Notifications.Core.Domain.Orders;
-using System.Notifications.Servers.API.Autentication;
+﻿namespace System.Notifications.Servers.API.Controllers;
 
-namespace System.Notifications.Servers.API.Controllers;
+//[ApiController]
+//[Route("api/[controller]")]
+//[ApiExplorerSettings(GroupName = "Events")]
+//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//public class EventsController(IPublishEvent publish) : ControllerBase
+//{
+//    [HttpPost("notificar-ordem-processada")]
+//    public async Task<IActionResult> CreateOrder([FromBody] Order order,
+//        CancellationToken cancellationToken = default)
+//    {
+//        var @event = new EventBase("process-order", order);
+//        await publish.PublishAsync(@event, cancellationToken);
 
-[ApiController]
-[Route("api/[controller]")]
-[ApiExplorerSettings(GroupName = "Events")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class EventsController(IPublishEvent publish) : ControllerBase
-{
-    [HttpPost("notificar-ordem-processada")]
-    public async Task<IActionResult> CreateOrder([FromBody] Order order,
-        CancellationToken cancellationToken = default)
-    {
-        var @event = new EventBase("process-order", order);
-        await publish.PublishAsync(@event, cancellationToken);
-
-        return Ok("evento notificado.");
-    }
-}
+//        return Ok("evento notificado.");
+//    }
+//}

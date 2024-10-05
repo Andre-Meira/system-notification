@@ -1,4 +1,5 @@
-﻿using System.Notifications.Core.Domain.Events;
+﻿using System.Notifications.Core.Domain.Abstracts.Exceptions;
+using System.Notifications.Core.Domain.Events;
 using System.Notifications.Core.Domain.Events.Repositories;
 using System.Notifications.Core.Domain.Notifications.Enums;
 using System.Notifications.Core.Domain.Notifications.Repositories;
@@ -11,13 +12,13 @@ public sealed class BaseNotificationService : INotificationService
 {
     private readonly IUserNotificationRepository _userNotificationRepository;
     private readonly INotificationRepository _notificationRepository;
-    private readonly IPublishNotification _publishNotification;
+    private readonly IPublishNotificationChannel _publishNotification;
     private readonly IOutboundNotificationRepository _outboundNotificationRepository;
     private readonly IEventsRepository _eventsRepository;
 
     public BaseNotificationService(IUserNotificationRepository userNotificationRepository,
         INotificationRepository notificationRepository,
-        IPublishNotification publishNotification,
+        IPublishNotificationChannel publishNotification,
         IOutboundNotificationRepository outboundNotificationRepository,
         IEventsRepository eventsRepository)
     {
@@ -41,13 +42,14 @@ public sealed class BaseNotificationService : INotificationService
     }
 
     public async Task<IEnumerable<NotificationContext>> PublishNotificationAsync(
+        string eventCode,
         NotificationMessage notificationMessage,
         CancellationToken cancellationToken = default)
     {
         var notificationContextList = new List<NotificationContext>();
 
-        IEnumerable<UserNotificationsParameters> userNotificationsParameters = await _userNotificationRepository
-            .FindUserByEventCodeAsync(notificationMessage.EventCode);
+        var userNotificationsParameters = await _userNotificationRepository
+            .FindUserByEventCodeAsync(eventCode);
 
         foreach (UserNotificationsParameters userParameters in userNotificationsParameters)
         {
@@ -78,7 +80,13 @@ public sealed class BaseNotificationService : INotificationService
         }
 
         var notificationPublishs = notificationContextList.Where(e => e.Error.Count == 0).ToList();
-        await _publishNotification.PublishAsync(notificationPublishs, cancellationToken);
+        var notificationGroup = notificationPublishs.GroupBy(e => e.OutboundNotifications);
+
+        foreach (var notifications in notificationGroup)
+        {
+            var channelsType = (OutboundNotificationsType)notifications.Key!;
+            await _publishNotification.PublishAsync(channelsType, notifications.ToArray(), cancellationToken);
+        }
 
         return notificationContextList;
     }
@@ -86,8 +94,13 @@ public sealed class BaseNotificationService : INotificationService
     public async Task RepublishPendingNotificationsAsync(Guid userId, Guid outboundId,
         CancellationToken cancellation = default)
     {
+        var outbound = await _outboundNotificationRepository.GetByIdAsync(outboundId);
+
+        if (outbound is null)
+            throw new ExceptionDomain("Outbound notfound");
+
         var notifications = await _notificationRepository.GetPendingNotifications(userId, outboundId);
-        await _publishNotification.PublishAsync(notifications.ToList(), cancellation);
+        await _publishNotification.PublishAsync((OutboundNotificationsType)outbound, notifications.ToArray(), cancellation);
     }
 
     public async Task SaveNotificationsAsync(NotificationContext[] notifications)

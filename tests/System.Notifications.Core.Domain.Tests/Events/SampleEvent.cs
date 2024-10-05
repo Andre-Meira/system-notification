@@ -15,17 +15,4 @@ public record SampleEvent
         [JsonPropertyName("name_text")]
         public string Name { get; set; }
     }
-
-
-    public record SampleOrder2
-    {
-        public SampleOrder2(int value)
-        {
-            Value = value;
-        }
-
-        [JsonRequired]
-        [JsonPropertyName("value_int")]
-        public int Value { get; set; }
-    }
 }
