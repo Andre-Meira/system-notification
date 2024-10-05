@@ -13,12 +13,12 @@ public class OutBoundNotificationSamples
 
     public OutboundNotifications Email = new OutboundNotifications(
                 Guid.Parse("E8171280-D07B-4816-8600-6A49C8A2F246"),
-                "EMAIL", "Email ",
+                "Email", "Email ",
                 "envia notificações atraves de Email");
 
     public OutboundNotifications WebSocket = new OutboundNotifications(
                 Guid.Parse("7DA62CF2-4164-487F-B911-6266311E4E51"),
-                "WEBSOCKET", "WebSocket Service",
+                "WebSocket", "WebSocket Service",
                 "envia notificações atraves de WebSocket");
 
 

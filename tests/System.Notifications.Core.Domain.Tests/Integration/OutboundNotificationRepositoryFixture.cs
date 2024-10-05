@@ -32,6 +32,14 @@ public class OutboundNotificationRepositoryFixture
         });
 
         outboundNotificationRepository.Setup(e =>
+            e.GetAllAsync(It.IsAny<CancellationToken>())
+         )
+        .Returns((CancellationToken _) =>
+        {
+            return Task.FromResult(listOutbound.AsEnumerable());
+        });
+
+        outboundNotificationRepository.Setup(e =>
             e.SaveChangeAsync(It.IsAny<OutboundNotifications>(), It.IsAny<CancellationToken>())
          )
         .Callback((OutboundNotifications notification, CancellationToken _) =>

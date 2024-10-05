@@ -85,4 +85,37 @@ public class DefaultEventDispatcherTests
         catch (Exception) { }
         finally { Assert.True(eventPublished); }
     }
+
+    [Fact]
+    public async Task Publica_Evento_E_Valida_Se_EventDispatcherFailed_Nao_Foi_Executado()
+    {
+        bool eventPublished = false;
+
+        _eventDispatcher.SubscribeAtEvent<SampleEvent.SampleOrder>("order", e => Task.CompletedTask);
+
+        try
+        {
+            object @object = new SampleEvent.SampleOrder2(2);
+            await _eventDispatcher.PublishEventAsync("order", @object);
+        }
+        catch (Exception) { }
+        finally { Assert.False(eventPublished); }
+    }
+
+    [Fact]
+    public async Task Publica_Evento_Que_Nao_Tem_Assinatura_Retona_False()
+    {
+        bool eventPublished = false;
+        
+        EventDispatcherBase.EventDispatcherStarted += (string eventCode, object @event) =>
+        {
+            eventPublished = true;
+            return Task.CompletedTask;
+        };
+
+        var @object = new SampleEvent.SampleOrder("test");
+        await _eventDispatcher.PublishEventAsync("teste", @object);
+
+        Assert.False(eventPublished);
+    }
 }

@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\adpaters\System.Notifications.Adpater.DataBase.MongoDB\System.Notifications.Adpater.DataBase.MongoDB.csproj" />
     <ProjectReference Include="..\..\adpaters\System.Notifications.Adpater.MessageBroker.RabbitMQ\System.Notifications.Adpater.MessageBroker.RabbitMQ.csproj" />
     <ProjectReference Include="..\..\adpaters\System.Notifications.Adpater.OutBound.Email\System.Notifications.Adpater.OutBound.Email.csproj" />
+    <ProjectReference Include="..\..\adpaters\System.Notifications.Adpater.OutBound.Sockets\System.Notifications.Adpater.OutBound.Sockets.csproj" />
     <ProjectReference Include="..\..\core\System.Notifications.Core.Domain\System.Notifications.Core.Domain.csproj" />
     <ProjectReference Include="..\..\core\System.Notifications.Core.ServiceDefaults\System.Notifications.Core.ServiceDefaults.csproj" />
   </ItemGroup>

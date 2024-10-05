@@ -89,4 +89,11 @@ public class EventRegistryServiceTests
             return Service.DeleteAsync(Guid.NewGuid());
         });
     }
+
+    [Fact]
+    public async Task Obtem_uma_Lista_De_Eventos_Retona_List()
+    {
+        var events = await Service.GetAllAsync();
+        Assert.NotEmpty(events);
+    }
 }

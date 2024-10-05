@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Services;
@@ -6,8 +8,10 @@ using System.Notifications.Servers.API.Models.Parameters;
 
 namespace System.Notifications.Servers.API.Controllers.Parameters;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
+[ApiExplorerSettings(GroupName = "Parameters")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class UsersNotificationController(IUserService userService) : ControllerBase
 {
     [HttpPost("create-user")]

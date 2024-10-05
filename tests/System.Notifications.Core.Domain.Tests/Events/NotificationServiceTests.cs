@@ -7,11 +7,11 @@ using System.Notifications.Core.Domain.Tests.Integration;
 
 namespace System.Notifications.Core.Domain.Tests.Events;
 
-public class BasicEventConsumerTests
+public class NotificationServiceTests
 {
-    public INotificationService EventConsumerSer { get; }
+    public INotificationService Service { get; }
 
-    public BasicEventConsumerTests()
+    public NotificationServiceTests()
     {
         var eventsRepositoryFixture = new EventsRepositoryFixture();
         var notificationRepositoryFixture = new NotificationRepositoryFixture();
@@ -20,7 +20,7 @@ public class BasicEventConsumerTests
 
         var publishNotification = new Mock<IPublishNotification>();
 
-        EventConsumerSer = new BaseNotificationService
+        Service = new BaseNotificationService
             (
                 userNotificationRepositoryFixture.UserNotificationRepository,
                 notificationRepositoryFixture.NotificationRepository,
@@ -38,7 +38,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
+        var notifications = await Service.PublishNotificationAsync(@event);
 
         var notificationError = notifications.Where(e => e.Error.Any());
         Assert.Empty(notificationError);
@@ -52,7 +52,7 @@ public class BasicEventConsumerTests
             "Pagamento criado e logo caira para aprovação",
             new Order("teste", "testeee"));
 
-        var notifications = await EventConsumerSer.PublishNotificationAsync(@event);
+        var notifications = await Service.PublishNotificationAsync(@event);
         Assert.Empty(notifications);
     }
 }

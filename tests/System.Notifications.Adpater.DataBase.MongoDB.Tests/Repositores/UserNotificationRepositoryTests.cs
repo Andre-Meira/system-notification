@@ -1,4 +1,5 @@
-﻿using System.Notifications.Core.Domain.Users;
+﻿using Moq;
+using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Tests.Repositores;
@@ -60,6 +61,20 @@ public class UserNotificationRepositoryTests : IClassFixture<MongoDbFixture>
     public async Task Procura_Uma_Parametrizacao_de_Usuario_Baseado_no_EventCode_Retorna_Lista_de_Usuarios()
     {
         var registry = await _userNotificationRepository.FindUserByEventCodeAsync("process-order");
+        Assert.NotEmpty(registry);
+    }
+
+    [Fact]
+    public async Task Procura_Uma_Parametrizacao_de_Usuario_Baseado_no_EventCode_Que_Nao_Existe_Retorna_Vazio()
+    {
+        var registry = await _userNotificationRepository.FindUserByEventCodeAsync(It.IsAny<string>());
+        Assert.Empty(registry);
+    }
+
+    [Fact]
+    public async Task Obtem_Uma_Lista_De_Usuario_Retorna_Uma_Lista_de_Usuarios()
+    {
+        var registry = await _userNotificationRepository.GetAllUsers();
         Assert.NotEmpty(registry);
     }
 }
