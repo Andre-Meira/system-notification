@@ -1,7 +1,6 @@
 ﻿using MongoDB.Driver;
 using System.Notifications.Adpater.DataBase.MongoDB.Contexts;
 using System.Notifications.Core.Domain.Notifications;
-using System.Notifications.Core.Domain.Notifications.Enums;
 using System.Notifications.Core.Domain.Notifications.Repositories;
 
 namespace System.Notifications.Adpater.DataBase.MongoDB.Repositores;
@@ -21,6 +20,7 @@ internal class NotificationRepository(MongoContext mongoContext) : INotification
         return notifications.ToArray();
     }
 
+
     public async Task<NotificationContext?> GetByIdAsync(Guid id, CancellationToken cancellation = default)
         => await mongoContext.NotificationContext.Find(e => e.Id == id)
             .FirstOrDefaultAsync(cancellationToken: cancellation);
@@ -31,4 +31,23 @@ internal class NotificationRepository(MongoContext mongoContext) : INotification
                 replacement: notificationContext,
                 options: new ReplaceOptions { IsUpsert = true },
                 cancellationToken: cancellationToken);
+
+    public async Task<NotificationContext[]> GetNotificationsAsync(Guid userId, 
+        Guid outboundId,
+        int page = 1, 
+        int itemsPerPage = 10,
+         CancellationToken cancellationToken = default)
+    {
+        var notifications = await mongoContext.NotificationContext
+            .Find(e => e.OutboundNotifications != null &&
+                       e.UserNotificationsId == userId &&
+                       e.OutboundNotifications.Id == outboundId
+            )
+            .SortByDescending(e => e.DeliveredAt)
+            .Skip(page * itemsPerPage)
+            .Limit(itemsPerPage)
+            .ToListAsync(cancellationToken: cancellationToken);
+
+        return notifications.ToArray();
+    }
 }

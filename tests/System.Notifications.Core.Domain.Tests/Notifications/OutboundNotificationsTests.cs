@@ -25,7 +25,7 @@ public class OutboundNotificationsTests
     public void Altera_OutboundNotifications_Para_OutboundNotificationsType_WebSocket()
     {
         OutboundNotificationsType type = (OutboundNotificationsType)new OutBoundNotificationSamples().WebSocket;
-        Assert.Equal(OutboundNotificationsType.WebScokets, type);
+        Assert.Equal(OutboundNotificationsType.WebScoket, type);
     }
 
     [Fact]

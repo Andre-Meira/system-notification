@@ -18,7 +18,7 @@ var mongoOptions = host.Configuration.GetSection(MongoOptions.Key).Get<MongoOpti
 
 host.Services.AddScoped(_ => new SocketsOptions
 {
-    Token = "Basic c2lzdGVtYTpjZWE3Y2VhYy1iYWM2LTQ0YjEtOTg4My0wOTBkZDViOTBmZTE=",
+    Token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InNpc3RlbWEiLCJuYW1laWQiOiJhM2RjMDRkOC0wZWRkLTQyNzgtOWEyMS04NGNmMDlmZjgxZjIiLCJuYmYiOjE3MjgxODE0MzgsImV4cCI6MTcyODE5NTgzOCwiaWF0IjoxNzI4MTgxNDM4LCJpc3MiOiJub3RpZmljYXRpb24tYXBpIiwiYXVkIjoibm90aWZpY2F0aW9ucyJ9.b9xD0YL30g-saJT8RVB3qM9XYmgaqgwul37LucqIb94",
     UrlSocket = "http://localhost:5186/notifications"
 });
 host.Services.AddScoped<ISocketNotification,BaseSocketNotification>();

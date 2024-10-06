@@ -15,6 +15,9 @@ public interface INotificationService
 
     Task SaveNotificationsAsync(NotificationContext[] notifications);
 
-    public Task RepublishPendingNotificationsAsync(Guid userId, Guid outboundId,
-        CancellationToken cancellation = default);
+    public Task<NotificationContext[]> GetNotificationsAsync(Guid userId,
+        string outboundCode,
+        int page = 1,
+        int itemsPerPage = 10,
+        CancellationToken cancellationToken = default);
 }

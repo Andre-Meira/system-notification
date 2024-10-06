@@ -5,11 +5,13 @@ using System.Notifications.Core.Domain.Notifications.Enums;
 using System.Notifications.Core.Domain.Notifications.Repositories;
 using System.Notifications.Core.Domain.Users;
 using System.Notifications.Core.Domain.Users.Repositories;
+using System.Runtime.CompilerServices;
 
 namespace System.Notifications.Core.Domain.Notifications.Services;
 
 public sealed class BaseNotificationService : INotificationService
 {
+    #region props
     private readonly IUserNotificationRepository _userNotificationRepository;
     private readonly INotificationRepository _notificationRepository;
     private readonly IPublishNotificationChannel _publishNotification;
@@ -28,6 +30,7 @@ public sealed class BaseNotificationService : INotificationService
         _outboundNotificationRepository = outboundNotificationRepository;
         _eventsRepository = eventsRepository;
     }
+    #endregion
 
     public async Task ConfirmReceiptNotifications(Guid[] ids)
     {
@@ -91,21 +94,24 @@ public sealed class BaseNotificationService : INotificationService
         return notificationContextList;
     }
 
-    public async Task RepublishPendingNotificationsAsync(Guid userId, Guid outboundId,
-        CancellationToken cancellation = default)
-    {
-        var outbound = await _outboundNotificationRepository.GetByIdAsync(outboundId);
-
-        if (outbound is null)
-            throw new ExceptionDomain("Outbound notfound");
-
-        var notifications = await _notificationRepository.GetPendingNotifications(userId, outboundId);
-        await _publishNotification.PublishAsync((OutboundNotificationsType)outbound, notifications.ToArray(), cancellation);
-    }
 
     public async Task SaveNotificationsAsync(NotificationContext[] notifications)
     {
         foreach (var notification in notifications)
             await _notificationRepository.SaveChangeAsync(notification);
+    }
+
+    public async Task<NotificationContext[]> GetNotificationsAsync(Guid userId,
+        string outboundCode,
+        int page = 1,
+        int itemsPerPage = 10,
+         CancellationToken cancellationToken = default)
+    {
+        var outbound = await _outboundNotificationRepository.GetByCodeAsync(outboundCode);
+
+        if (outbound == null)
+            throw new ExceptionDomain("outbound not found");
+
+        return await _notificationRepository.GetNotificationsAsync(userId, outbound.Id, page, itemsPerPage);
     }
 }

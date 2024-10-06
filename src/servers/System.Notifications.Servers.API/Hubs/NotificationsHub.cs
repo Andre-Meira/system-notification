@@ -10,13 +10,16 @@ using System.Security.Claims;
 namespace System.Notifications.Servers.API.Hubs;
 
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache memoryCache, IPublishContext publishContext) : Hub
+public class NotificationsHub(
+    ILogger<NotificationsHub> logger, 
+    IMemoryCache memoryCache, 
+    IPublishContext publishContext) : Hub
 {
     public string? UserName => Context.User?.FindFirst(ClaimTypes.Name)?.Value;
     public Guid UserId => Guid.Parse(Context.User!.FindFirst(ClaimTypes.NameIdentifier)!.Value ?? Guid.Empty.ToString());
     public bool IsAuthenticated => Context.User?.Identity?.IsAuthenticated ?? false;
 
-    public override Task OnConnectedAsync()
+    public override async Task OnConnectedAsync()
     {
         if (IsAuthenticated == false)
                 Context.Abort();
@@ -24,7 +27,7 @@ public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache mem
         logger.LogInformation($"Usuario {UserId} logado!!");
         memoryCache.Set(UserId, Context.ConnectionId);
 
-        return Task.CompletedTask;
+        await Groups.AddToGroupAsync(Context.ConnectionId, UserId.ToString());
     }
 
     public override Task OnDisconnectedAsync(Exception? exception)
@@ -40,7 +43,7 @@ public class NotificationsHub(ILogger<NotificationsHub> logger, IMemoryCache mem
         if (connetecId == null)
             return;
 
-        await Clients.Client(connetecId).SendAsync("ReceiveNotification", context);
+        await Clients.Group(context.UserNotificationsId.ToString()).SendAsync("ReceiveNotification", context);
         await publishContext.PublishTopicMessage(context, ConstantsRoutings.ExchangeDeliveryNotifications);
     }
 

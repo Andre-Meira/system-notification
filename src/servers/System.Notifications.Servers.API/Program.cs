@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSwaggerGenDefault();
 
-builder.Services.AddControllers()
-    .AddJsonOptions(e => e.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower);
+builder.Services.AddControllers();
 
 
 builder.Services.AddEndpointsApiExplorer();

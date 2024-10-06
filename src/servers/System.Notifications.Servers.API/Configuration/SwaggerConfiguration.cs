@@ -25,9 +25,9 @@ public static class SwaggerConfiguration
                 Version = "v1",
             });
 
-            options.SwaggerDoc("Events", new OpenApiInfo
+            options.SwaggerDoc("Notifications", new OpenApiInfo
             {
-                Title = "Events",
+                Title = "Notifications",
                 Version = "v1",
 
             });
@@ -60,7 +60,7 @@ public static class SwaggerConfiguration
                             Id = JwtBearerDefaults.AuthenticationScheme
                         }
                     },
-                    new string[] { "Events", "Parameters" }
+                    new string[] { "Notifications", "Parameters" }
                 }
             });
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -92,7 +92,7 @@ public static class SwaggerConfiguration
         {
             c.SwaggerEndpoint("/swagger/Parameters/swagger.json", "Parameters v1");
             c.SwaggerEndpoint("/swagger/Authorization/swagger.json", "Authorization v1");
-            c.SwaggerEndpoint("/swagger/Events/swagger.json", "Events v1");
+            c.SwaggerEndpoint("/swagger/Notifications/swagger.json", "Notifications v1");
         });
 
         return applicationBuilder;
@@ -162,7 +162,7 @@ internal class SecurityRequirementsOperationFilter : IOperationFilter
                             {
                                 Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = id }
                             },
-                            new[] { "Events", "Parameters" }
+                            new[] { "Notifications", "Parameters" }
                         }
                     }
                 };

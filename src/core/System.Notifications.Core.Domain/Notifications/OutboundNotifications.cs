@@ -26,7 +26,7 @@ public record OutboundNotifications : Entity
         {
             "SMS" => OutboundNotificationsType.Sms,
             "Email" => OutboundNotificationsType.Email,
-            "WebSocket" => OutboundNotificationsType.WebScokets,
+            "WebSocket" => OutboundNotificationsType.WebScoket,
             _ => throw new NotImplementedException(outbound.Code)
         };
     }
