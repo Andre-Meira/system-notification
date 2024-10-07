@@ -16,10 +16,10 @@ public class NotificationContentesSamples
             nameof(SampleEvent.SampleOrder), "Sample Order", "");
 
         NotificationMessage notification = new NotificationMessage(
-            nameof(SampleEvent.SampleOrder),
+            "Ordem Publicada",
             "order publicada com sucesso",
             "ordem 123 criada",
-            new SampleEvent.SampleOrder("teste"));
+            new Dictionary<string, string> { { "OrdeID", Guid.NewGuid().ToString() } });
 
         return new NotificationContext(Guid.NewGuid(), userID, notification, eventsRegistrys, outbound);
     }

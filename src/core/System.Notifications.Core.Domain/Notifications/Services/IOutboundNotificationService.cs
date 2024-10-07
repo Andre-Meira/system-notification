@@ -1,7 +1,4 @@
-﻿using System.Notifications.Core.Domain.Abstracts.Exceptions;
-using System.Notifications.Core.Domain.Notifications.Repositories;
-
-namespace System.Notifications.Core.Domain.Notifications.Services;
+﻿namespace System.Notifications.Core.Domain.Notifications.Services;
 
 public interface IOutboundNotificationService
 {

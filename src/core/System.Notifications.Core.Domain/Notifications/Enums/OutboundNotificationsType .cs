@@ -4,5 +4,5 @@ public enum OutboundNotificationsType
 {
     Email,
     Sms,
-    WebScokets
+    WebScoket
 }

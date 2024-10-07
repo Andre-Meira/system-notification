@@ -2,22 +2,19 @@
 
 public record NotificationMessage
 {
-    public NotificationMessage(string eventCode,
+    public NotificationMessage(string title,
         string message,
         string description,
-        object? @event = null)
+        Dictionary<string, string>? arguments = null)
     {
         Message = message;
         Description = description;
-        EventCode = eventCode;
-        Event = @event;
+        Title = title;
+        Arguments = arguments;
     }
 
-    public string Message { get; private set; }
-
-    public string Description { get; private set; }
-
-    public string EventCode { get; init; }
-
-    public object? Event { get; init; }
+    public string Message { get; init; }
+    public string Description { get; init; }
+    public string Title { get; init; }
+    public Dictionary<string, string>? Arguments { get; init; }
 }
